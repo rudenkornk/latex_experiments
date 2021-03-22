@@ -1,0 +1,494 @@
+\input{preamble}
+
+\author{Автор}
+\title{Шпаргалка по \LaTeX}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\renewcommand{\abstractname}{Краткое содержание}
+\begin{abstract}
+    Текст аннотации
+\end{abstract}
+
+\section{Шрифт и выравнивание}
+\subsection{Кегль}
+% Есть 3 способа использовать эти команды
+% 1. Без ничего они действуют на весь документ после себя
+\tiny крошечный
+
+\scriptsize очень маленький
+
+\footnotesize довольно маленький
+
+\small маленький
+
+\normalsize нормальный
+
+\large большой
+
+\Large еще больше
+
+\LARGE очень большой
+
+% 2. Можно использовать окружение
+\begin{huge}
+    огромный
+\end{huge}
+
+% 3. Можно заключать в фигурные скобки вместе с командой
+{\Huge громадный}
+\normalsize
+
+
+\subsection{Начертание}
+\textbf{Жирный},
+\textit{Курсив}
+
+\emph{Выделенный текст, \emph{внутри которого выделен} другой текст}
+
+\subsection{Выравнивание}
+% Удаляем колонтитулы
+\thispagestyle{empty}
+% Выравнивание по центру
+\begin{center}
+    Федеральное государственное автономное учреждение\\
+    МОСКОВСКИЙ ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ
+\end{center}
+% Вертикальынй пробел
+\vspace{3ex}
+% Выравниванивание по правому краю
+\begin{flushright}
+    % Без красной строки
+    \noindent
+    Фамилия Имя Отчество
+\end{flushright}
+
+\begin{multicols}{2}
+    Текст в двух колонках
+
+    Текст в двух колонках
+
+    Текст в двух колонках
+
+    Текст в двух колонках
+\end{multicols}
+
+Пробел до конца страницы
+\vfill
+\begin{center}
+    Москва 2014
+\end{center}
+\newpage
+
+\section{Математика}
+\subsection{Переходы в математический режим}
+
+% Формула внутри текста:
+Четыре --- это два плюс два: $2+2=4$
+
+% "Выключная" формула:
+Четыре --- это два плюс два: \[2+2=4\]
+
+% Формула с номером, созданная с помощью окружения:
+\begin{equation}\label{eq:def4}
+    2+2=4
+\end{equation}
+
+% Пример ссылки:
+\eqref{eq:def4}  на стр. \pageref{eq:def4} --- определение числа 4.
+
+\subsection{Группирование формул}
+% Для того чтобы убрать нумерацию необходимо добавить "*" к названию окружения. Выравнивание формул осуществляется по знакам равенства с помощью "&" стоящих перед ними.
+
+% Окружение align автоматически переходит в математический режим, тогда как alined нужно окружать самостоятельно. Взамен, aligned может быть частью более сложных конструкций.
+\begin{align}
+    1\times 1 & = 1 & 4\times 4   & = 16 \tag{TAG} \label{eq:sq} \\
+    2\times 2 & = 4 & 5\times 5   & = 25                         \\
+    3\times 3 & = 9 & 60\times 60 & = 3600
+\end{align}
+
+\begin{equation}
+    \begin{aligned}
+        1\times 1 & = 1 & 4\times 4   & = 16   \\
+        2\times 2 & = 4 & 5\times 5   & = 25   \\
+        3\times 3 & = 9 & 60\times 60 & = 3600
+    \end{aligned}
+\end{equation}
+% Пример ссылки на нестандартный тег:
+В уравнении \eqref{eq:sq} на стр. \pageref{eq:sq} много слагаемых.
+
+\subsection{Дроби: изменяющие и неизменяющие размер}
+
+
+\begin{align*}
+    \frac{1+\dfrac{4}{2}}{6} = 0,5
+     &  &
+    \frac{1+\frac{4}{2}}{6} = 0,5
+\end{align*}
+
+\subsection{Длинные формулы}
+\begin{multline}
+    1+2+3+4+5+6+7+\dots + \\
+    + 50+51+52+53+54+55+56+57 + \dots + \\
+    + 96+97+98+99+100=5050
+\end{multline}
+
+\subsection{Системы уравнений и матрицы}
+
+\begin{align*}
+    \left\{
+    \begin{aligned}
+        1\times x & = 1 \\
+        2\times y & = 4 \\
+        3\times z & = 9 \\
+    \end{aligned}
+    \right.
+     &  &
+    |x|=
+    \begin{cases}
+        x,  & \text{если }  x \ge 0 \\
+        -x, & \text{если } x<0
+    \end{cases}
+\end{align*}
+
+\begin{align*}
+    \begin{pmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23}
+    \end{pmatrix}
+     &  &
+    \begin{vmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23}
+    \end{vmatrix}
+     &  &
+    \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23}
+    \end{bmatrix}
+\end{align*}
+
+\section{Картинки}
+
+\begin{align*}
+    \includegraphics[scale=0.45]{logo}
+     &  &
+    \includegraphics[draft,width=\textwidth,height=3cm,keepaspectratio]{logo}
+\end{align*}
+
+\section{Таблицы}
+
+% Полноразмерные формулы в таблице задаются с помощью конструкции
+% $\displaystyle ...$
+% Чтобы формула не касалась границы снизу вручную задается минимальная высота строки после переноса "\\"
+% Чтобы формула не касалась границы сверху изменяется параметр \extrarowheight
+\setlength{\extrarowheight}{5mm}
+\begin{tabular}{|cp{4cm}|} % center, right, left
+    \hline
+    Это предложение из многих слов. &
+    Это предложение из многих слов.
+    \\
+    \hline
+    $\displaystyle \frac{x}{y}$     &
+    $\displaystyle \frac{x}{y}$
+    \\[5mm] %<-задание минимальной высоты вручную
+    \hline
+\end{tabular}
+\setlength{\extrarowheight}{0mm}
+\\
+
+% Другая команда для таблиц
+% Имеет дополнительный модификатор выравнивания X
+\begin{tabularx}{\textwidth}{|X|c|X|}
+    \hline
+    Это очень-очень длинное предложение из многих слов &
+    Текст покороче                                     &
+    Это очень-очень длинное предложение из многих слов Это очень-очень длинное предложение из многих слов
+    \\ \hline
+\end{tabularx}
+\\
+
+% Этот вариант подбирает ширину столбцов таким образом, чтобы их высота была одинаковой
+% Модификаторы выравнивания пишутся с заглавной буквы. J = Justify
+\begin{tabulary}{\textwidth}{|C|J|R|}
+    \hline
+    Это очень-очень длинное предложение из многих слов &
+    Текст покороче &
+    Это очень-очень длинное предложение из многих слов Это очень-очень длинное предложение из многих слов
+    \\ \hline
+\end{tabulary}
+
+
+% Окружение \begin{table} подбирает расположение таблицы "наилучшим" образом
+% В необязательном аргументе можно указать модификатор h (here), рекомендуя LaTeX расположить таблицу там же где и ссылка на нее.
+% Если добавить "!", то рекомендация будет более жесткой, возможно LaTeX нарушит некоторые ограничения
+\begin{table}[!h]
+    \begin{center}
+        \caption[Заголовок, который будет в списке таблиц]{Заголовок таблицы}\label{tab:1}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            0,576745371 & 0,435853468 & 0,36384912  & 0,299047979 \\
+            0,064795364 & 0,028454613 & 0,751312059 & 0,693972684 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    %\caption{Заголовок мог быть и здесь}
+\end{table}
+
+
+\begin{longtable}{|c|c|c|c|}
+    \caption[Заголовок большой таблицы, который будет в списке таблиц]{Заголовок большой таблицы}
+    \\ \hline
+    \textbf{RND1} & \textbf{RND2} & \textbf{RND3} & \textbf{RND4} \\ \hline
+    \endfirsthead
+    \hline
+    RND1          & RND2          & RND3          & RND4          \\ \hline
+    \endhead
+    \hline
+    \multicolumn{4}{r}{продолжение следует\ldots} \
+    \endfoot
+    \hline
+    \endlastfoot
+    0,576745371   & 0,435853468   & 0,36384912    & 0,299047979   \\
+    0,064795364   & 0,028454613   & 0,751312059   & 0,693972684   \\
+    0,263563971   & 0,367508634   & 0,075536384   & 0,337780707   \\
+    0,957583964   & 0,431948588   & 0,938522377   & 0,464307785   \\
+    0,815740484   & 0,123129806   & 0,883432767   & 0,760983283   \\
+    0,445062335   & 0,157424268   & 0,883442259   & 0,300596338   \\
+    0,187159669   & 0,728663343   & 0,637199982   & 0,765684528   \\
+    0,41009848    & 0,457031472   & 0,142858106   & 0,602946607   \\
+    0,43315663    & 0,26058316    & 0,611667007   & 0,400328185   \\
+    0,824086963   & 0,27304335    & 0,244565296   & 0,219675484   \\
+    0,109578811   & 0,278478018   & 0,242519359   & 0,414669471   \\
+    0,220778432   & 0,938106645   & 0,502630894   & 0,910760406   \\
+    0,957583964   & 0,431948588   & 0,938522377   & 0,464307785   \\
+    0,815740484   & 0,123129806   & 0,883432767   & 0,760983283   \\
+    0,445062335   & 0,157424268   & 0,883442259   & 0,300596338   \\
+    0,187159669   & 0,728663343   & 0,637199982   & 0,765684528   \\
+    0,41009848    & 0,457031472   & 0,142858106   & 0,602946607   \\
+    0,43315663    & 0,26058316    & 0,611667007   & 0,400328185   \\
+    0,824086963   & 0,27304335    & 0,244565296   & 0,219675484   \\
+    0,109578811   & 0,278478018   & 0,242519359   & 0,414669471   \\
+    0,220778432   & 0,938106645   & 0,502630894   & 0,910760406   \\
+\end{longtable}
+
+\section{Плавающие объекты}
+
+\begin{wrapfigure}{l}{0.3333\linewidth}
+    \includegraphics[width=\linewidth]{logo}
+    \caption{Картинка с обтеканием}
+\end{wrapfigure}
+
+Существует несколько эволюционных теорий, объясняющих механизмы, лежащие в основе эволюционных процессов.
+В данный момент наиболее общепринятой является синтетическая теория эволюции (СТЭ), являющаяся синтезом классического дарвинизма и популяционной генетики.
+СТЭ позволяет объяснить связь материала эволюции (генетические мутации) и механизма эволюции (естественный отбор).
+В рамках СТЭ эволюция определяется как процесс изменения частот аллелей генов в популяциях организмов в течение времени, превышающего продолжительность жизни одного поколения.
+
+Смотри таблицу \ref{tab:2}
+
+\begin{wraptable}{r}{0.5\linewidth}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        Год  & $P_x$ & $Q_x$ & $P_y$ & $Q_y$ & $n$   \\ \hline
+        2008 &       & 36    &       & 32    & —     \\ \hline
+        2009 & 30    & 30    & 22    & 50    & 25 \% \\ \hline
+        2010 & 36    & 30    & 22    &       & 20 \% \\ \hline
+        2011 & 33    & 40    & 24    & 45    &       \\ \hline
+    \end{tabular}
+    \caption{Обтекаемая таблица}\label{tab:2}
+\end{wraptable}
+
+Чарлз Дарвин первым сформулировал теорию эволюции путём естественного отбора.
+Эволюция путём естественного отбора — это процесс, который следует из трёх фактов о популяциях:
+1) рождается больше потомства, чем может выжить;
+2) у разных организмов разные черты, что приводит к различиям в выживаемости и вероятности оставить потомство;
+3) эти черты — наследуемые.
+Эти условия приводят к появлению внутривидовой конкуренции и избирательной элиминации наименее приспособленных к среде особей, что ведёт к увеличению в следующем поколении доли особей, черты которых способствуют выживанию и размножению в этой среде.
+Естественный отбор — единственная известная причина адаптаций, но не единственная причина эволюции.
+К числу неадаптивных причин относятся генетический дрейф, поток генов и мутации.
+
+Предположение о том, что живые организмы могут изменяться, впервые встречается у греческих философов-досократиков.
+Представитель милетской школы Анаксимандр считал, что все животные произошли из воды, после чего вышли на сушу. Человек, по его представлениям, зародился в теле рыбы.
+У Эмпедокла можно найти идеи гомологии и выживания наиболее приспособленных.
+Демокрит считал, что наземные животные произошли от земноводных, а те в свою очередь самозародились в илу.
+
+\section{Счетчики}
+
+% Необязательный аргумент указывает на подчинение
+\newcounter{customcounter}[section]
+\setcounter{customcounter}{2}
+\addtocounter{customcounter}{1}
+\arabic{customcounter}
+\roman{customcounter}
+\Roman{customcounter}
+\alph{customcounter}
+\Alph{customcounter}
+\Asbuk{customcounter}
+\fnsymbol{customcounter}
+
+% Переопределение нумерации разделов
+\renewcommand{\thesection}{\Asbuk{section}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\section{Перечни}
+% Переопределение нумерации перечней
+\renewcommand{\theenumi}{\roman{enumi}}
+
+\begin{itemize}
+    \item[*] Первый пункт
+    \item Второй пункт
+    \item
+          \begin{itemize}
+              \item Первый пункт вложенного списка
+              \item Второй пункт вложенного списка
+                    \begin{enumerate}
+                        \item Первый пункт нумерованного списка
+                    \end{enumerate}
+          \end{itemize}
+\end{itemize}
+
+\section{Теоремы}
+
+\begin{theorem}[Простое равенство]\label{th:1}
+    $2+2=4$
+\end{theorem}
+
+\begin{proposition}
+    $2+2=4$
+\end{proposition}
+
+\begin{corollary}
+    $2+2=4$
+\end{corollary}
+
+\begin{problem}
+$2+2$
+\end{problem}
+
+\begin{solution}
+    $2+2=4$
+\end{solution}
+
+\section{Гиперссылки}
+
+Caйт МФТИ \url{https://mipt.ru/}
+
+\href{https://mipt.ru/}{Сайт МФТИ}
+
+\section{Пакет babel и правила русской типографики}
+\subsection{Дефисы}
+% N dash - Не используется в русской типографике
+--
+% M dash - Стандартное тире
+---
+
+% Тире для отсутствующего члена предложения
+Москва "--- столица РФ.
+
+"--* Прямая речь
+
+\subsection{Кавычки}
+<<Елочки и ,,лапки``>>
+
+\subsection{Пробелы}
+
+В русском наборе принято:
+\begin{itemize}
+    \item единицы измерения, знак процента отделять пробелами от числа: 10~кВт, 15~\%;
+    \item $\tg 20^\circ$, но: 20~${}^\circ$С;
+    \item знак номера, параграфа отделять от числа: №~5, \S~8;
+    \item стандартные сокращения: т.\:е., и~т.\:д., и~т.\:п.;
+    \item неразрывные пробелы в~предложениях.
+\end{itemize}
+
+
+\section{Пакет science}
+
+\subsection{Математические шрифты}
+
+mathcal font: $\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
+mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
+
+\subsection{Код на Python}
+\inputminted{python}{python_example.py}
+
+\subsection{Код на C++}
+\inputminted{c++}{cpp_example.cpp}
+
+\subsection{Однобуквенные команды}
+
+\begin{table}[H]
+    \begin{tabular}{llll}
+        \textbackslash a & \a   & \textbackslash A & todo \\
+        \textbackslash b & todo & \textbackslash B & todo \\
+        \textbackslash c & todo & \textbackslash C & todo \\
+        \textbackslash d & todo & \textbackslash D & todo \\
+        \textbackslash e & todo & \textbackslash E & todo \\
+        \textbackslash f & todo & \textbackslash F & todo \\
+        \textbackslash g & todo & \textbackslash G & todo \\
+        \textbackslash h & todo & \textbackslash H & todo \\
+        \textbackslash i & todo & \textbackslash I & todo \\
+        \textbackslash j & todo & \textbackslash J & todo \\
+        \textbackslash k & todo & \textbackslash K & todo \\
+        \textbackslash l & todo & \textbackslash L & todo \\
+        \textbackslash m & todo & \textbackslash M & todo \\
+        \textbackslash n & todo & \textbackslash N & todo \\
+        \textbackslash o & todo & \textbackslash O & todo \\
+        \textbackslash p & todo & \textbackslash P & todo \\
+        \textbackslash q & todo & \textbackslash Q & todo \\
+        \textbackslash r & todo & \textbackslash R & todo \\
+        \textbackslash s & todo & \textbackslash S & todo \\
+        \textbackslash t & todo & \textbackslash T & todo \\
+        \textbackslash u & todo & \textbackslash U & todo \\
+        \textbackslash v & todo & \textbackslash V & todo \\
+        \textbackslash w & todo & \textbackslash W & todo \\
+        \textbackslash x & todo & \textbackslash X & todo \\
+        \textbackslash y & todo & \textbackslash Y & todo \\
+        \textbackslash z & todo & \textbackslash Z & todo \\
+    \end{tabular}
+\end{table}
+
+\section{Объявление новых команд и окружений}
+% Простое объявление
+\newcommand{\nw}{\ensuremath{\succcurlyeq}}
+
+% newcommand позволяет не более 9 обязательных аргументов
+% и 1 необязательный, причем необязательный аргумент всегда идет первым
+% Число всех аргументов указывается в первых "[]"
+% Для указания наличия необязательного агрумента добавляются вторые "[]",
+% в которых указывается значение по умолчанию, возможно пустое
+% Символы % для того чтобы перенос строки не считался частью команды
+\newcommand{\customcommand}[2][X]{
+    $#1 + #2$
+}
+
+\customcommand{Y}
+\customcommand[Z]{Y}
+
+% \renewcommand работает также, но для уже определенных команд
+
+% Окружение отличается от команды, в основном, тем, что
+% имеет завершающую последовательность
+\newenvironment{customenv}[1]{
+    \addtocounter{customcounter}{1}%
+    Номер \thesection.\arabic{customcounter}. <<#1>> %
+}%
+{\vspace{0cm}} % code ending the environment
+
+\begin{customenv}{Свое окружение}
+    Текст внутри окружения.
+\end{customenv}
+
+\section{Пакет etoolbox}
+
+\newbool{custombool}
+\booltrue{custombool}
+\ifbool{custombool}{Правда}{Ложь}
+
+\listoffigures
+
+\listoftables
+
+\end{document}

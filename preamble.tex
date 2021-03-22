@@ -1,0 +1,132 @@
+\documentclass[a4paper,12pt]{article}
+
+% Logic operators & compiler detection
+\usepackage{etoolbox}
+\usepackage{iftex}
+
+% Enumeration
+\usepackage{enumitem}
+
+% Hyperrefs
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
+\hypersetup{
+    unicode=true,
+    pdftitle={Заголовок},
+    pdfauthor={Автор},
+    pdfsubject={Тема},
+    pdfcreator={Создатель},
+    pdfproducer={Производитель},
+    pdfkeywords={keyword1} {keyword2},
+    % False means refs in boxes, true means color refs
+    colorlinks=true,
+    linkcolor=red,
+    citecolor=green,
+    filecolor=magenta,
+    urlcolor=blue
+}
+
+% Language support
+\ifXeTeX
+    % Ensure you have CMU fonts installed!
+    % Open Type, True Type, etc.
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures={TeX}, Renderer=Basic}
+    % Default serif font
+    \setmainfont[Ligatures={TeX,Historic}]{CMU Serif}
+    % Default sans font
+    \setsansfont{Times New Roman}
+    % Default mono font
+    \setmonofont{CMU Typewriter Text}
+\else
+    \RequirePDFTeX
+    % Search in PDF document
+    \usepackage{cmap}
+    % Russian letters in formulas
+    \usepackage{mathtext}
+    % Encodings
+    \usepackage[T2A]{fontenc}
+    \usepackage[utf8]{inputenc}
+\fi
+\usepackage[english,russian]{babel}
+
+% Correct quotation
+\usepackage{fvextra}
+\usepackage{csquotes}
+
+% First line indent
+\usepackage{indentfirst}
+% ... and remove first line indent
+\usepackage{parskip}
+\setlength{\parindent}{0ex}
+\frenchspacing
+
+% Symbols like copyright, degree
+\usepackage{textcomp}
+% Bold, italics, etc.
+\usepackage{soul}
+
+% Default font is sans
+%\renewcommand{\familydefault}{\sfdefault}
+
+% Page setup
+\usepackage{multicol}
+% Setup margins
+\usepackage{geometry}
+\geometry{top=20mm}
+\geometry{bottom=20mm}
+\geometry{left=10mm}
+\geometry{right=10mm}
+
+% Setup headers and footer
+% Number of pages in document
+\usepackage{lastpage}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0mm}
+\lfoot{}
+\rfoot{}
+\rhead{}
+\chead{}
+\lhead{}
+%\cfoot{Нижний в центре}
+
+% Linespacing
+\usepackage{setspace}
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+
+% Tables
+\usepackage{array,booktabs}
+% Evenly distribute table by height or by width
+\usepackage{tabularx,tabulary}
+\usepackage{longtable}
+\usepackage{multirow}
+
+% Picture packages
+\usepackage{graphicx}
+% Picture wrap
+\usepackage{wrapfig}
+% Automatic conversion from eps
+\usepackage{epstopdf}
+\graphicspath{{images/}}
+% Picture box margins
+\setlength\fboxsep{3pt}
+\setlength\fboxrule{1pt}
+
+
+% Graphics inside latex
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{pgfplotstable}
+
+% Only show numbers if formula is referenced
+%\mathtoolsset{showonlyrefs=true}
+
+% Display formula number on the left
+%\usepackage{leqno}
+\usepackage{science/science}
