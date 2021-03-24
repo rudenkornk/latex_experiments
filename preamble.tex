@@ -114,26 +114,16 @@
 % Set serif default font
 %\renewcommand{\familydefault}{\sfdefault}
 
-% Only show numbers if formula is referenced
-%\mathtoolsset{showonlyrefs=true}
-
-% Display formula number on the left
-%\usepackage{leqno}
-
 % Set linespacing
 %\singlespacing
 %\onehalfspacing
 %\doublespacing
 
-\graphicspath{{images/}}
-
-% Picture box margins
-\setlength\fboxsep{3pt}
-\setlength\fboxrule{1pt}
-
-% No first line indent
-\setlength{\parindent}{0ex}
-\frenchspacing
+% Set up margins
+\geometry{top=20mm}
+\geometry{bottom=20mm}
+\geometry{left=10mm}
+\geometry{right=10mm}
 
 % Set up headers
 \pagestyle{fancy}
@@ -145,20 +135,20 @@
 \lhead{}
 %\cfoot{Нижний в центре}
 
-% Set up margins
-\geometry{top=20mm}
-\geometry{bottom=20mm}
-\geometry{left=10mm}
-\geometry{right=10mm}
+\graphicspath{{images/}}
+
+% Picture box margins
+\setlength\fboxsep{3pt}
+\setlength\fboxrule{1pt}
+
+% No first line indent
+\setlength{\parindent}{0ex}
+\frenchspacing
 
 \hypersetup{
     unicode=true,
-    pdftitle={Заголовок},
-    pdfauthor={Автор},
-    pdfsubject={Тема},
-    pdfcreator={Создатель},
-    pdfproducer={Производитель},
-    pdfkeywords={keyword1} {keyword2},
+    pdftitle={Домашнее задание \#1},
+    pdfauthor={Никита Руденко},
     % False means refs in boxes, true means color refs
     colorlinks=true,
     linkcolor=red,
@@ -166,6 +156,12 @@
     filecolor=magenta,
     urlcolor=blue
 }
+
+% Only show numbers if formula is referenced
+%\mathtoolsset{showonlyrefs=true}
+
+% Display formula number on the left
+%\usepackage{leqno}
 
 
 %=============================== Support commands ===============================
