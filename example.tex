@@ -4,6 +4,8 @@
 \title{Шпаргалка по \LaTeX}
 \date{\today}
 
+\immediate\write18{pdflatex -aux-directory build -output-directory build/images images/picture_source.tex}
+
 \begin{document}
 \maketitle
 
@@ -177,6 +179,9 @@
      &  &
     \includegraphics[draft,width=\textwidth,height=3cm,keepaspectratio]{logo}
 \end{align*}
+\begin{center}
+    \adjustimage{max width=\textwidth/3, trim={{.25\width} {.25\height} {.25\width} {.25\height}},clip}{picture_source}
+\end{center}
 
 \section{Таблицы}
 
