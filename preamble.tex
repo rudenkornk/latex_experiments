@@ -90,8 +90,11 @@
 % Additional math symbols
 \usepackage{stmaryrd}
 
-% Code hightlighting
+% Code hightlighting for all languages except LaTeX
 \usepackage[outputdir=build]{minted}
+
+% Code hightlighting for LaTeX
+\usepackage{listings}
 
 % A comprehensive SI units package
 \usepackage{siunitx}
@@ -160,6 +163,15 @@
     citecolor=green,
     filecolor=magenta,
     urlcolor=blue
+}
+
+\lstset
+{
+    language=[LaTeX]TeX,
+    breaklines=true,
+    basicstyle=\tt\scriptsize,
+    keywordstyle=\color{blue},
+    identifierstyle=\color{magenta},
 }
 
 % Only show numbers if formula is referenced

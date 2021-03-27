@@ -182,6 +182,25 @@
 \begin{center}
     \adjustimage{max width=\textwidth/3, trim={{.25\width} {.25\height} {.25\width} {.25\height}},clip}{picture_source}
 \end{center}
+Картинки можно масштабировать и обрезать с помощью команды \verb|\adjustimage| из пакета \verb|adjustbox|.
+Кроме того, не обязательно хранить картинки в бинарном формате.
+Исходный \LaTeX\:код можно прекомпилировать с помощью команды:
+\begin{lstlisting}
+    \immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
+\end{lstlisting}
+После чего, использовать выходной файл в обычной команде импортирующей картинки.
+Если в редакторе недоступны команды \verb|\immediate\write18|, то картинки нужно скомпилировать вручную по одной.
+После чего положить их в папку build/images.
+
+В десктопной версии программы GeoGebra доступен экспорт в \LaTeX\: код, использующий пакет \verb|tikz|.
+Экспортируемый код использует абсолютные величины для размеров шрифта и фигур.
+При этом, абсолютный размер полотна может не соответствовать реальному размеру картинки.
+Поэтому, чтобы картинка скомпилировалась корректно, при экспортировании нужно с помощью подстройки параметров X Unis и Y Units подобрать желаемый размер полотна.
+Этот размер полотна необходимо добавить в сгенерированный код после команды \verb|\documentclass|:
+\begin{lstlisting}
+    \documentclass[10pt]{article}
+    \usepackage[margin=0in,paperwidth=23cm,paperheight=15cm]{geometry}
+\end{lstlisting}
 
 \section{Таблицы}
 
