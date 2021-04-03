@@ -4,7 +4,7 @@
 \title{Шпаргалка по \LaTeX}
 \date{\today}
 
-\immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
+\immediate\write18{python compile_on_change.py -i images/picture_source.tex -o build/images -v -l}
 
 \begin{document}
 \maketitle
@@ -188,6 +188,11 @@
 \begin{lstlisting}
     \immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
 \end{lstlisting}
+Чтобы не перекомпилировать изображения каждый раз, можно использовать самописный скрипт, который запускает компиляцию только при изменении исходного кода:
+\begin{lstlisting}
+    \immediate\write18{python compile_on_change.py -i images/picture_source.tex -o build/images -v}
+\end{lstlisting}
+
 После чего, использовать выходной файл в обычной команде импортирующей картинки.
 Если в редакторе недоступны команды \verb|\immediate\write18|, то картинки нужно скомпилировать вручную по одной.
 После чего положить их в папку build/images.
