@@ -4,10 +4,6 @@
 \title{Шпаргалка по \LaTeX}
 \date{\today}
 
-\immediate\write18{python compile_on_change.py -i
-                   images/picture_source.tex
-                   -o build/images -v -l
-                   }
 
 \begin{document}
 \maketitle
@@ -183,7 +179,7 @@
     \includegraphics[draft,width=\textwidth,height=3cm,keepaspectratio]{logo}
 \end{align*}
 \begin{center}
-    \adjustimage{max width=\textwidth/3, trim={{.25\width} {.25\height} {.25\width} {.25\height}},clip}{picture_source}
+    \adjustimage{max width=\textwidth/3, trim={{.25\width} {.25\height} {.25\width} {.25\height}},clip}{picture_source.pdf}
 \end{center}
 Картинки можно масштабировать и обрезать с помощью команды \verb|\adjustimage| из пакета \verb|adjustbox|.
 Кроме того, не обязательно хранить картинки в бинарном формате.
@@ -191,10 +187,10 @@
 \begin{lstlisting}
     \immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
 \end{lstlisting}
-Чтобы не перекомпилировать изображения каждый раз, можно использовать самописный скрипт, который запускает компиляцию только при изменении исходного кода:
-\begin{lstlisting}
-    \immediate\write18{python compile_on_change.py -i images/picture_source.tex -o build/images -v}
-\end{lstlisting}
+Или использовать latexmk:
+\begin{minted}{perl}
+    push @default_files, 'images/picture_source.tex';
+\end{minted}
 
 После чего, использовать выходной файл в обычной команде импортирующей картинки.
 Если в редакторе недоступны команды \verb|\immediate\write18|, то картинки нужно скомпилировать вручную по одной.
