@@ -444,6 +444,15 @@ mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
 \section{Код на C++}
 \inputminted{c++}{cpp_example.cpp}
 
+\section{Код на \LaTeX}
+Предыдущие примеры использовали пакет \verb|minted|, который в свою очередь опирается на модуль \emph{Pygments} для \emph{Python}. Этот модуль не поддерживает \LaTeX. Поэтому, для последнего используются команды \verb|<Latex code here>| для inline \LaTeX кода и
+\begin{lstlisting}
+    \begin{_lstlisting}
+        <Latex code here>
+    \end{_lstlisting}
+\end{lstlisting}
+Для многострочного кода.
+
 \section{Однобуквенные команды}
 \begin{table}[H]
     \begin{tabular}{llll}
