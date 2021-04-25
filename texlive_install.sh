@@ -13,7 +13,7 @@ if ! command -v texlua > /dev/null; then
   cd install-tl-20*
 
   # Install a minimal system
-  ./install-tl --profile=../texlive/texlive.profile
+  ./install-tl --profile=../texlive.profile
 
   cd ..
 fi
@@ -24,8 +24,17 @@ tlmgr update --self
 # Just including texlua so the cache check above works
 tlmgr install luatex
 
-# We specify the directory in which it is located texlive_packages
-tlmgr install $(sed 's/\s*#.*//;/^\s*$/d' texlive/texlive_packages)
+# Base tools to compile
+tlmgr install texliveonfly latexmk
+
+# texliveonfly does not detect the following packages automatically
+tlmgr install minted fvextra upquote lineno xstring framed caption
+tlmgr install collection-langcyrillic
+tlmgr install collection-langeuropean
+tlmgr install collection-fontsrecommended
+
+# Fixed set of packages for tex images:
+tlmgr install geometry pgfplots jknapltx
 
 # Keep no backups (not required, simply makes cache bigger)
 tlmgr option -- autobackup 0
