@@ -28,6 +28,7 @@ tlmgr install luatex
 tlmgr install texliveonfly latexmk
 
 # texliveonfly does not detect the following packages automatically
+tlmgr install biber
 tlmgr install minted fvextra upquote lineno xstring framed caption
 tlmgr install collection-langcyrillic
 tlmgr install collection-langeuropean
