@@ -2,29 +2,14 @@
 
 %=============================== Packages ===============================
 
-\usepackage{iftex}
-\ifXeTeX
-    % Ensure you have CMU fonts installed!
-    % Open Type, True Type, etc.
-    \usepackage{fontspec}
-    \defaultfontfeatures{Ligatures={TeX}, Renderer=Basic}
-    \setmainfont[Ligatures={TeX,Historic}]{CMU Serif}
-    \setsansfont{Times New Roman}
-    \setmonofont{CMU Typewriter Text}
-\else
-    \RequirePDFTeX
-    % Search in PDF document
-    \usepackage{cmap}
-    % Russian letters in formulas
-    \usepackage{mathtext}
-    % Encodings
-    \usepackage[T2A]{fontenc}
-    \usepackage[utf8]{inputenc}
-\fi
+% Encodings
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 
 % NewDocumentCommand and conditional expressions
 \usepackage{xparse}
+\usepackage{iftex}
 
 \usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
 
@@ -46,6 +31,9 @@
 \usepackage{wrapfig}
 \usepackage{epstopdf}
 \usepackage{adjustbox}
+
+% Search in PDF document
+\usepackage{cmap}
 
 \usepackage{hyperref}
 
@@ -71,6 +59,9 @@
 
 % Linespacing
 \usepackage{setspace}
+
+% Russian letters in formulas
+\usepackage{mathtext}
 
 \usepackage{amsmath}
 
@@ -114,6 +105,8 @@
 
 
 %=============================== Customizations ===============================
+
+\RequirePDFTeX
 
 % Set serif default font
 %\renewcommand{\familydefault}{\sfdefault}
