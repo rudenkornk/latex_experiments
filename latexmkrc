@@ -7,6 +7,7 @@ sub custom_pdflatex {
   push @args, "pdflatex";
   push @args, "--synctex=1";
   push @args, "--shell-escape";
+  push @args, "--interaction=nonstopmode";
   for my $i(@_){
     $i =~ s/\\/\//;
     $i =~ s/^(-[\w|-]*?directory[\w|-]*?=)(.*)/$1\"$2\"/;
