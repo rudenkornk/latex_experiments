@@ -23,5 +23,5 @@ jobs:
             example.tex
       - uses: actions/upload-artifact@v2
         with:
-          name: PDF
+          name: output
           path: build/example.pdf
