@@ -8,7 +8,6 @@ sub custom_pdflatex {
   push @args, "--synctex=1";
   push @args, "--shell-escape";
   for my $i(@_){
-    my $is_out_dir = ($i =~ m/^-output-directory=/);
     $i =~ s/\\/\//;
     $i =~ s/^(-[\w|-]*?directory[\w|-]*?=)(.*)/$1\"$2\"/;
     push @args, $i;
