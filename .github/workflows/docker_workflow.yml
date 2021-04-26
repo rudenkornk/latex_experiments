@@ -1,0 +1,22 @@
+name: LaTeX workflow with docker
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          extra_system_packages: "py-pygments"
+          latexmk_shell_escape: true
+          root_file: |
+            images/picture_source.tex
+            example.tex
