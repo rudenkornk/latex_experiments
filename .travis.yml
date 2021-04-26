@@ -3,6 +3,10 @@ language: generic
 
 dist: bionic
 
+branches:
+  only:
+  - main
+
 before_install:
   - sudo apt-get install python-pygments
   - sudo apt-get install xzdec
