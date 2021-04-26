@@ -32,6 +32,14 @@
 \usepackage{epstopdf}
 \usepackage{adjustbox}
 
+% Bibliography
+\usepackage[backend=biber,%
+    bibencoding=utf8,%
+    sorting=nty,%
+    maxcitenames=2,%
+    style=authoryear]%
+{biblatex}
+
 % Search in PDF document
 \usepackage{cmap}
 
@@ -157,6 +165,8 @@
     filecolor=magenta,
     urlcolor=blue
 }
+
+\addbibresource{bibliography.bib}
 
 \lstset
 {
