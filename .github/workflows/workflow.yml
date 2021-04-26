@@ -2,27 +2,27 @@ name: LaTeX workflow
 on:
   push:
     branches:
-      - main
+    - main
   pull_request:
     branches:
-      - main
+    - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v2
-      # See https://github.com/xu-cheng/latex-action
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
-        with:
-          extra_system_packages: "py-pygments"
-          latexmk_shell_escape: true
-          root_file: |
-            images/picture_source.tex
-            example.tex
-      - name: Upload a build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: output
-          path: build/example.pdf
+    - name: Set up Git repository
+      uses: actions/checkout@v2
+    # See https://github.com/xu-cheng/latex-action
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2
+      with:
+        extra_system_packages: "py-pygments"
+        latexmk_shell_escape: true
+        root_file: |
+          images/picture_source.tex
+          example.tex
+    - name: Upload a build artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: output
+        path: build/example.pdf
