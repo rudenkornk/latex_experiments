@@ -3,9 +3,10 @@
 %=============================== Packages ===============================
 
 % Encodings
-\usepackage[T2A]{fontenc}
-\usepackage[utf8]{inputenc}
+\usepackage[T1,T2A]{fontenc}
+\usepackage{fontspec}
 \usepackage[english,russian]{babel}
+
 
 % NewDocumentCommand and conditional expressions
 \usepackage{xparse}
@@ -113,11 +114,10 @@
 
 
 %=============================== Customizations ===============================
-
-\RequirePDFTeX
-
-% Set serif default font
-%\renewcommand{\familydefault}{\sfdefault}
+\defaultfontfeatures{Renderer=Basic,Ligatures={TeX}}
+\setmainfont{CMU Serif}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
 
 % Set linespacing
 %\singlespacing
@@ -233,27 +233,27 @@
 %=============================== Ensure math for common symbols ===============================
 \wrapensuremath{alpha}
 \wrapensuremath{beta}
-\wrapensuremath{gamma}   \wrapensuremath{Gamma}
-\wrapensuremath{delta}   \wrapensuremath{Delta}
+\wrapensuremath{gamma}   %\wrapensuremath{Gamma}
+\wrapensuremath{delta}   %\wrapensuremath{Delta}
 \wrapensuremath{epsilon}
 \wrapensuremath{zeta}
 \wrapensuremath{eta}
-\wrapensuremath{theta}   \wrapensuremath{Theta}
+\wrapensuremath{theta}   %\wrapensuremath{Theta}
 \wrapensuremath{iota}
 \wrapensuremath{kappa}
-\wrapensuremath{lambda}  \wrapensuremath{Lambda}
+\wrapensuremath{lambda}  %\wrapensuremath{Lambda}
 \wrapensuremath{mu}
 \wrapensuremath{nu}
-\wrapensuremath{xi}      \wrapensuremath{Xi}
-\wrapensuremath{pi}      \wrapensuremath{Pi}
+\wrapensuremath{xi}      %\wrapensuremath{Xi}
+\wrapensuremath{pi}      %\wrapensuremath{Pi}
 \wrapensuremath{rho}
-\wrapensuremath{sigma}   \wrapensuremath{Sigma}
+\wrapensuremath{sigma}   %\wrapensuremath{Sigma}
 \wrapensuremath{tau}
-\wrapensuremath{upsilon} \wrapensuremath{Upsilon}
-\wrapensuremath{phi}     \wrapensuremath{Phi}
+\wrapensuremath{upsilon} %\wrapensuremath{Upsilon}
+\wrapensuremath{phi}     %\wrapensuremath{Phi}
 \wrapensuremath{chi}
-\wrapensuremath{psi}     \wrapensuremath{Psi}
-\wrapensuremath{omega}   \wrapensuremath{Omega}
+\wrapensuremath{psi}     %\wrapensuremath{Psi}
+\wrapensuremath{omega}   %\wrapensuremath{Omega}
 \wrapensuremath{iff}
 \wrapensuremath{rightarrow}
 \wrapensuremath{leftarrow}
