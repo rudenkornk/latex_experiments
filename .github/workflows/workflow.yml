@@ -16,6 +16,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Install more fonts
+      run: |
+        apk --no-cache add msttcorefonts-installer fontconfig
+        update-ms-fonts
+        fc-cache -f
+        mktextfm larm1200
     - name: Compile LaTeX document
       run: latexmk -interaction=nonstopmode
     - name: Upload a build artifact
