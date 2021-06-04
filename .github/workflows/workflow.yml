@@ -23,9 +23,10 @@ jobs:
         fc-cache -f
         mktextfm larm1200
     - name: Compile LaTeX document
-      run: latexmk -interaction=nonstopmode
+      run: latexmk -interaction=nonstopmode -f
     - name: Upload a build artifact
       uses: actions/upload-artifact@v2
+      if: ${{ always() }}
       with:
         name: output
         path: build/example.pdf
