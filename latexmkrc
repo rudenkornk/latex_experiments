@@ -18,6 +18,5 @@ sub fix_paths_and_run {
   system $command;
 }
 
-@default_files = ();
-push @default_files, "images/picture_source.tex";
+@default_files = glob("images/*.tex");
 push @default_files, "example.tex";
