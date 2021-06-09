@@ -28,5 +28,6 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ always() }}
       with:
+        if-no-files-found: ignore
         name: output
         path: build/example.pdf
