@@ -16,12 +16,28 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Install more packages
+      run: |
+        apk add --no-cache libxslt-dev libxml2-dev libffi-dev openssl-dev curl jq
+        apk add --no-cache g++ gcc make
+        apk add --no-cache python3 python3-dev py3-configobj py3-pip py3-setuptools py3-wheel
+        pip install lxml
     - name: Install more fonts
       run: |
         apk --no-cache add msttcorefonts-installer fontconfig
         update-ms-fonts
         fc-cache -f
         mktextfm larm1200
+    - name: Check draw.io files
+      if: ${{github.event_name == 'pull_request'}}
+      run: |
+        for i in images/*.drawio; do
+          python3 decode_drawio.py -i $i -c
+          if [ $? -eq 1 ]; then
+            echo "Looks like this drawio file requires decoding before commit: " $i
+            exit 1
+          fi
+        done
     - name: Compile LaTeX document
       run: latexmk -interaction=nonstopmode -f
     - name: Upload a build artifact
