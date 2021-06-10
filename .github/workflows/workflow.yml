@@ -24,7 +24,7 @@ jobs:
         done
         git diff --no-color &> drawio.patch
         if [ -s drawio.patch ]; then
-          echo "Looks like some drawio file require decoding before commit"
+          echo "Looks like some drawio files require decoding before commit:"
           cat drawio.patch
           exit 1
         fi
