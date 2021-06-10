@@ -43,7 +43,8 @@ if not encoded_diagram:
         print("Not an encoded .drawio file")
     sys.exit()
 if is_check:
-    sys.exit(1)
+    print("1")
+    sys.exit()
 result = decode_diagram(encoded_diagram)
 if output:
     with open(output, "w") as f:
