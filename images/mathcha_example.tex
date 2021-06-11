@@ -1,0 +1,64 @@
+\documentclass[10pt]{article}
+\usepackage[T1,T2A]{fontenc}
+\usepackage{fontspec}
+\usepackage[english,russian]{babel}
+
+\usepackage[margin=0in]{geometry}
+\usepackage{pgfplots}
+\usepackage{physics}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{mathdots}
+\usepackage{yhmath}
+\usepackage{cancel}
+\usepackage{color}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amssymb}
+\usepackage{gensymb}
+\usepackage{tabularx}
+\usepackage{extarrows}
+\usepackage{booktabs}
+\usetikzlibrary{fadings}
+\usetikzlibrary{patterns}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes}
+
+
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\pagestyle{empty}
+
+\defaultfontfeatures{Renderer=Basic,Ligatures={TeX}}
+\setmainfont{Times New Roman}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
+
+
+\begin{document}
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,453); %set diagram left start at 0, and has height of 453
+
+%Shape: Rectangle [id:dp5369023072660863]
+\draw   (100,50) -- (680,50) -- (680,250) -- (100,250) -- cycle ;
+%Shape: Rectangle [id:dp1016969206619529]
+\draw   (110,60) -- (190,60) -- (190,240) -- (110,240) -- cycle ;
+%Shape: Rectangle [id:dp5385203972043133]
+\draw   (200,60) -- (410,60) -- (410,240) -- (200,240) -- cycle ;
+%Shape: Rectangle [id:dp4183645961973754]
+\draw   (420,60) -- (630,60) -- (630,240) -- (420,240) -- cycle ;
+
+% Text Node
+\draw (305,145) node   [align=left] {\begin{minipage}[lt]{129.2pt}\setlength\topsep{0pt}
+Поток и 128 регистров по 32 байта
+\end{minipage}};
+
+
+\end{tikzpicture}
+
+\end{document}
