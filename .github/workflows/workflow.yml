@@ -18,18 +18,9 @@ jobs:
         sudo apt install xvfb
         wget https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb
         sudo apt install ./drawio*.deb
+        pip3 install lxml
     - name: Compile images
-      run: |
-        export DISPLAY=:0
-        sudo Xvfb $DISPLAY &
-        mkdir build
-        for i in images/*.xml; do
-          # Check that this xml file is actually drawio file
-          if [[ ! "$(sed '2q;d' $i)" =~ "app.diagrams.net" ]]; then
-            continue
-          fi
-          drawio --transparent --crop --export $i -o build/$(basename $i .xml).pdf
-        done
+      run: python3 compile_images.py
     - name: Upload images
       uses: actions/upload-artifact@v2
       with:
