@@ -10,7 +10,8 @@ def format_xml(contents):
     formatted_xml = etree.tounicode(decoded_xml, pretty_print=True)
     return formatted_xml
 
-parser = argparse.ArgumentParser(description="Decode and format draw.io (app.diagrams.net) files",
+
+parser = argparse.ArgumentParser(description="Pretty-print xml files",
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("-i", "--input", type=Path, dest="input", required=True,
                     help="input file")
