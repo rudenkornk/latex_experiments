@@ -34,7 +34,7 @@ for filename in glob.glob("images/*.xml"):
     inp = Path(filename)
     with open(inp, "rb") as f:
         parsed_xml = objectify.fromstring(f.read())
-        # Check that this xml file is actually drawio file
+    # Check that this xml file is actually drawio file
     if not parsed_xml.values().count("app.diagrams.net"):
         continue
     output = build_dir / (inp.name[:-4] + ".pdf")
