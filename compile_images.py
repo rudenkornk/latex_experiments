@@ -12,14 +12,16 @@ if platform.system() == "Windows":
 else:
     drawio = "drawio"
 
+# Check that xserver is running on linux
 if platform.system() == "Linux":
-    os.environ["DISPLAY"] = ":0"
+    if "DISPLAY" not in os.environ:
+      os.environ["DISPLAY"] = ":0"
     error = os.system("bash ./run_xserver.sh")
     if error:
         sys.exit(error)
 
 # Check that draw.io installed
-drawio_check_command = drawio + " --help >nul"
+drawio_check_command = drawio + " --help "
 drawio_check_command += ">nul" if platform.system() == "Windows" else ">/dev/null"
 error = os.system(drawio_check_command)
 if error:
@@ -43,5 +45,8 @@ for filename in glob.glob("images/*.xml"):
         continue
     command = drawio + " --transparent --crop --export --output {} {}".format(output, inp)
     print(command)
-    os.system(command)
+    error = os.system(command)
+    if error:
+      print("Unexpected error when running drawio command")
+      sys.exit(error)
     update_hash(inp)
