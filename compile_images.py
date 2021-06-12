@@ -35,7 +35,7 @@ for filename in glob.glob("images/*.xml"):
     with open(inp, "rb") as f:
         parsed_xml = objectify.fromstring(f.read())
     # Check that this xml file is actually drawio file
-    if not parsed_xml.values().count("app.diagrams.net"):
+    if parsed_xml.tag != "mxfile":
         continue
     output = build_dir / (inp.name[:-4] + ".pdf")
     if not is_compilation_required(inp, output):
