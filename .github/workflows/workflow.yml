@@ -7,33 +7,6 @@ on:
     branches:
     - main
 jobs:
-  check_drawio:
-    runs-on: ubuntu-latest
-    if: ${{github.event_name == 'pull_request'}}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Install packages
-      run: pip install lxml
-    - name: Check draw.io files
-      run: |
-        for i in images/*.drawio; do
-          python3 decode_drawio.py --input $i --output $i
-        done
-        git diff --no-color &> drawio.patch
-        if [ -s drawio.patch ]; then
-          echo "Looks like some drawio files require decoding before commit:"
-          cat drawio.patch
-          exit 1
-        fi
-    - name: Upload drawio.patch
-      uses: actions/upload-artifact@v2
-      if: ${{failure()}}
-      with:
-        if-no-files-found: ignore
-        name: drawio.patch
-        path: drawio.patch
-
   build:
     runs-on: ubuntu-latest
     # See https://github.com/xu-cheng/latex-docker
