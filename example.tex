@@ -187,9 +187,9 @@
 Картинки можно масштабировать и обрезать с помощью команды \verb|\adjustimage| из пакета \verb|adjustbox|.
 Кроме того, не обязательно хранить картинки в бинарном формате.
 Исходный \LaTeX\:код можно прекомпилировать с помощью команды:
-\begin{lstlisting}
+\begin{minted}{tex}
     \immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
-\end{lstlisting}
+\end{minted}
 Или использовать latexmk:
 \begin{minted}{perl}
     push @default_files, 'images/picture_source.tex';
@@ -204,10 +204,10 @@
 При этом, абсолютный размер полотна может не соответствовать реальному размеру картинки.
 Поэтому, чтобы картинка скомпилировалась корректно, при экспортировании нужно с помощью подстройки параметров X Unis и Y Units подобрать желаемый размер полотна.
 Этот размер полотна необходимо добавить в сгенерированный код после команды \verb|\documentclass|:
-\begin{lstlisting}
+\begin{minted}{tex}
     \documentclass[10pt]{article}
     \usepackage[margin=0in,paperwidth=23cm,paperheight=15cm]{geometry}
-\end{lstlisting}
+\end{minted}
 
 \section{Таблицы}
 
@@ -455,12 +455,6 @@ mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
     \blockquote[{\cite{TheMendeleySupportTeam2011}}]{Third interesting quote.}
 \end{minted}
 
-\begin{lstlisting}
-    \begin{_lstlisting}
-        <Latex code here>
-    \end{_lstlisting}
-\end{lstlisting}
-
 \section{Цитаты}
 \blockquote[{\cite{Tasnadi2006}}]{Some interesting quote.}
 
@@ -469,7 +463,7 @@ mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
 \blockquote[{\cite{TheMendeleySupportTeam2011}}]{Third interesting quote.}
 
 \section{Однобуквенные команды}
-\begin{table}[H]
+\begin{table}[h]
     \begin{tabular}{llll}
         \textbackslash a & \a   & \textbackslash A & $\A$ \\
         \textbackslash b & todo & \textbackslash B & todo \\

@@ -1,4 +1,6 @@
 \documentclass[a4paper,12pt]{article}
+% 13pt size font
+\usepackage[fontsize=12pt]{scrextend}
 
 %=============================== Packages ===============================
 
@@ -21,6 +23,12 @@
 % Margins
 \usepackage{geometry}
 
+% Centered sections
+\usepackage{sectsty}
+
+% More intelligent hyphenation
+\usepackage{microtype}
+
 % Tables
 \usepackage{array,booktabs}
 \usepackage{tabularx,tabulary}
@@ -34,17 +42,18 @@
 \usepackage{adjustbox}
 
 % Bibliography
-\usepackage[backend=biber,%
-    bibencoding=utf8,%
-    sorting=nty,%
-    maxcitenames=2,%
-    style=authoryear]%
+\usepackage[backend=biber,
+    bibencoding=utf8,
+    sorting=nty,
+    maxcitenames=2,
+    style=numeric-comp]
 {biblatex}
 
 % Search in PDF document
 \usepackage{cmap}
 
 \usepackage{hyperref}
+\usepackage[font=small,figurename=Рисунок]{caption}
 
 % Correct quotation
 \usepackage{fvextra}
@@ -62,6 +71,9 @@
 
 % Number of pages in document
 \usepackage{lastpage}
+
+% Local style setup
+\usepackage{afterpage}
 
 % Header and footer
 \usepackage{fancyhdr}
@@ -90,11 +102,8 @@
 % Additional math symbols
 \usepackage{stmaryrd}
 
-% Code hightlighting
-\usepackage[outputdir=build]{minted}
-
-% Alternative code hightlighting
-\usepackage{listings}
+% Code highlighting
+\usepackage[outputdir=build,newfloat]{minted}
 
 % A comprehensive SI units package
 \usepackage{siunitx}
@@ -146,8 +155,8 @@
 \setlength\fboxsep{3pt}
 \setlength\fboxrule{1pt}
 
-% No first line indent
-\setlength{\parindent}{0ex}
+% First line indent
+\setlength{\parindent}{0cm}
 \frenchspacing
 
 \hypersetup{
@@ -161,21 +170,27 @@
     % False means refs in boxes, true means color refs
     colorlinks=true,
     linkcolor=red,
-    citecolor=green,
+    citecolor=blue,
     filecolor=magenta,
     urlcolor=blue
 }
 
-\addbibresource{bibliography.bib}
-
-\lstset
-{
-    language=[LaTeX]TeX,
-    breaklines=true,
-    basicstyle=\tt\scriptsize,
-    keywordstyle=\color{blue},
-    identifierstyle=\color{magenta},
+\captionsetup[figure]{
+    labelformat=simple,
+    labelsep=endash,
+    justification=centering
 }
+
+\captionsetup[listing]{
+    labelformat=simple,
+    labelsep=endash,
+    justification=centering
+}
+
+\SetupFloatingEnvironment{listing}{name=Листинг}
+
+% Center sections
+%\allsectionsfont{\centering}
 
 % Only show numbers if formula is referenced
 %\mathtoolsset{showonlyrefs=true}
@@ -183,6 +198,8 @@
 % Display formula number on the left
 %\usepackage{leqno}
 
+
+\addbibresource{bibliography.bib}
 
 %=============================== Support commands ===============================
 \makeatletter
