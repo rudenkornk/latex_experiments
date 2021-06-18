@@ -13,6 +13,7 @@
 % NewDocumentCommand and conditional expressions
 \usepackage{xparse}
 \usepackage{iftex}
+\usepackage{etoolbox}
 
 \usepackage[usenames,dvipsnames,svgnames,table,rgb]{xcolor}
 
@@ -154,6 +155,8 @@
 % Picture box margins
 \setlength\fboxsep{3pt}
 \setlength\fboxrule{1pt}
+
+\newcolumntype{x}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 
 % First line indent
 \setlength{\parindent}{0cm}
