@@ -5,7 +5,7 @@ sub fix_paths_and_run {
   my @args = ();
   @args = ();
   for my $i(@_) {
-    $i =~ s/\\/\//;
+    $i =~ s/\\/\//g;
     $i =~ s/^(-[\w|-]*?directory[\w|-]*?=)(.*)/$1\"$2\"/;
     push @args, $i;
   }
