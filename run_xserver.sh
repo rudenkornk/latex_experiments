@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-if [[ $(pidof X) ]]; then
+if xset q &>/dev/null; then
   # Found running X server, exit
   exit 0
 fi
