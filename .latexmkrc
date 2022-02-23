@@ -19,4 +19,4 @@ sub fix_paths_and_run {
 }
 
 @default_files = glob("images/*.tex");
-push @default_files, "example.tex";
+push @default_files, "main.tex";
