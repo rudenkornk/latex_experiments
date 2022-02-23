@@ -3,8 +3,16 @@ import glob
 from lxml import etree, objectify
 from pathlib import Path
 from compile_on_change import is_compilation_required, update_hash
+import argparse
 
-build_dir = Path("build")
+parser = argparse.ArgumentParser(description="Compile drawio images",
+                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("-b", "--build_dir", type=Path, dest="build_dir", default="build",
+                        help="Build directory")
+args = parser.parse_args(sys.argv[1:])
+build_dir = args.build_dir
+hashes_path = build_dir / "hashes.txt"
+
 
 # Set drawio executable name
 if platform.system() == "Windows":
@@ -40,7 +48,7 @@ for filename in glob.glob("images/*.xml"):
     if parsed_xml.tag != "mxfile":
         continue
     output = build_dir / (inp.name[:-4] + ".pdf")
-    if not is_compilation_required(inp, output):
+    if not is_compilation_required(inp, output, hashes_path):
         print("Recompilation for {} is omitted".format(inp))
         continue
     command = drawio + " --transparent --crop --export --output {} {}".format(output, inp)
@@ -49,4 +57,4 @@ for filename in glob.glob("images/*.xml"):
     if error:
       print("Unexpected error when running drawio command")
       sys.exit(error)
-    update_hash(inp)
+    update_hash(inp, hashes_path)
