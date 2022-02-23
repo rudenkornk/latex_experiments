@@ -58,4 +58,4 @@ jobs:
       with:
         if-no-files-found: ignore
         name: output
-        path: build/example.pdf
+        path: build/main.pdf
