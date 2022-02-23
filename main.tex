@@ -208,6 +208,13 @@
     \documentclass[10pt]{article}
     \usepackage[margin=0in,paperwidth=23cm,paperheight=15cm]{geometry}
 \end{minted}
+Также, GeoGebra может использовать устаревший синтаксис для отрисовки окружностей
+(см. https://tex.stackexchange.com/questions/524076/problems-with-pgfplotsset).
+
+В vim можно быстро сделать замену с помощью команды
+\begin{minted}{vim}
+    :%s/circle (\(\%(\d\|\.\)\+\w\+\))/circle [radius=\1]/g
+\end{minted}
 
 \section{Таблицы}
 
