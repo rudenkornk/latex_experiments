@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os, sys, platform
 import glob
 from lxml import etree, objectify
