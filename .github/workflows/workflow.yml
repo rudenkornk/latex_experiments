@@ -9,10 +9,18 @@ on:
 jobs:
   build_drawio:
     runs-on: ubuntu-latest
+    outputs:
+      images_exists: ${{ steps.check_images.outputs.files_exists }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Check for *.xml files
+      id: check_images
+      uses: andstor/file-existence-action@v1.1.0
+      with:
+        files: "images/*.xml"
     - name: Install packages
+      if: steps.check_images.outputs.files_exists == 'true'
       run: |
         sudo apt-get install msttcorefonts
         sudo apt install xvfb
@@ -20,13 +28,14 @@ jobs:
         sudo apt install ./drawio*.deb
         pip3 install lxml
     - name: Compile images
+      if: steps.check_images.outputs.files_exists == 'true'
       run: python3 compile_images.py
     - name: Upload images
       uses: actions/upload-artifact@v2
       with:
-        if-no-files-found: ignore
         name: images
         path: build/
+        if-no-files-found: ignore
 
   build:
     needs: build_drawio
@@ -38,6 +47,12 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+    - name: Download images
+      if: needs.build_drawio.outputs.images_exists == 'true'
+      uses: actions/download-artifact@v2
+      with:
+        name: images
+        path: build/
     - name: Install more fonts
       run: |
         apk --no-cache add msttcorefonts-installer fontconfig
@@ -45,11 +60,6 @@ jobs:
         fc-cache -f
         mktextfm larm1000
         mktextfm larm1200
-    - name: Download images
-      uses: actions/download-artifact@v2
-      with:
-        name: images
-        path: build
     - name: Compile LaTeX document
       run: latexmk -interaction=nonstopmode -f
     - name: Upload a build artifact
