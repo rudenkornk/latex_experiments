@@ -13,20 +13,21 @@ def format_xml(contents):
     return formatted_xml
 
 
-parser = argparse.ArgumentParser(description="Pretty-print xml files",
-                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("-i", "--input", type=Path, dest="input", required=True,
-                    help="input file")
-parser.add_argument("-o", "--output", type=Path, dest="output", help="output file")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Pretty-print xml files",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-i", "--input", type=Path, dest="input", required=True,
+                        help="input file")
+    parser.add_argument("-o", "--output", type=Path, dest="output", help="output file")
 
-args = parser.parse_args(sys.argv[1:])
-input: Path = args.input
-output: Path = args.output
-with open(input, "r") as f:
-    contents = f.read()
-formatted_xml = format_xml(contents)
-if output:
-    with open(output, "w") as f:
-        f.write(formatted_xml)
-else:
-    print(formatted_xml)
+    args = parser.parse_args(sys.argv[1:])
+    input: Path = args.input
+    output: Path = args.output
+    with open(input, "r") as f:
+        contents = f.read()
+    formatted_xml = format_xml(contents)
+    if output:
+        with open(output, "w") as f:
+            f.write(formatted_xml)
+    else:
+        print(formatted_xml)
