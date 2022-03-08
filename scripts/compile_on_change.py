@@ -71,7 +71,7 @@ def _is_compilation_required(inp: Path, output: Path, hashes):
         return False
 
 
-def is_compilation_required(inp: Path, output: Path = None, hashes_path: Path = Path("build/hashes.txt")):
+def is_compilation_required(inp: Path, output: Path, hashes_path: Path):
     check_exists(inp, "input")
     check_file_if_exists(inp, "input")
     if output:
@@ -81,7 +81,7 @@ def is_compilation_required(inp: Path, output: Path = None, hashes_path: Path = 
     return _is_compilation_required(inp, output, hashes)
 
 
-def update_hash(inp: Path, hashes_path: Path = Path("build/hashes.txt")):
+def update_hash(inp: Path, hashes_path: Path):
     check_exists(inp, "input")
     check_file_if_exists(inp, "input")
     check_file_if_exists(hashes_path, "hashes_file")

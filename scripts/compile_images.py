@@ -7,12 +7,15 @@ from pathlib import Path
 from compile_on_change import is_compilation_required, update_hash
 import argparse
 
+def get_script_path():
+    return Path(os.path.dirname(os.path.realpath(__file__)))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Compile drawio images",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-b", "--build_dir", type=Path, dest="build_dir", default="build",
-                            help="Build directory")
+                        help="Build directory")
     args = parser.parse_args(sys.argv[1:])
     build_dir = args.build_dir
     hashes_path = build_dir / "hashes.txt"
@@ -27,8 +30,9 @@ if __name__ == '__main__':
     # Check that xserver is running on linux
     if platform.system() == "Linux":
         if "DISPLAY" not in os.environ:
-          os.environ["DISPLAY"] = ":0"
-        error = os.system("bash ./run_xserver.sh")
+            os.environ["DISPLAY"] = ":0"
+        run_xserver_path = get_script_path() / "run_xserver.sh"
+        error = os.system("bash " + str(run_xserver_path))
         if error:
             sys.exit(error)
 
@@ -59,6 +63,6 @@ if __name__ == '__main__':
         print(command)
         error = os.system(command)
         if error:
-          print("Unexpected error when running drawio command")
-          sys.exit(error)
+            print("Unexpected error when running drawio command")
+            sys.exit(error)
         update_hash(inp, hashes_path)
