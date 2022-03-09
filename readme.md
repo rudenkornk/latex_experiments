@@ -7,7 +7,7 @@ A simple example of LaTeX capabilities
 ## Build
 Install drawio using steps from github workflow and run
 ```shell
-python3 compile_images.py
+python3 compile_drawio_images.py
 ```
 
 Install texlive or use docker image (also from github workflow)
