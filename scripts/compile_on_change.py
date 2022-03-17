@@ -68,7 +68,7 @@ if __name__ == "__main__":
                         help="provide output file to compile if it does not exist")
     parser.add_argument("-u", "--update-hash", dest="update", action="store_true",
                         help="update file hash")
-    parser.add_argument("-s", "--hashes-file", type=Path, dest="hashes", default="build/hashes.txt",
+    parser.add_argument("-s", "--hashes-file", type=Path, dest="hashes", required=True,
                         help="file to store hashes")
 
     args = parser.parse_args(sys.argv[1:])
