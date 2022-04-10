@@ -21,3 +21,4 @@ sub fix_paths_and_run {
 
 @default_files = glob("assets/*.tex");
 push @default_files, "main.tex";
+
