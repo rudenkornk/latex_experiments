@@ -1,6 +1,7 @@
 $pdf_mode = 1;
 $out_dir = "build";
 $pdflatex = 'internal fix_paths_and_run lualatex --shell-escape -file-line-error %O %S';
+$biber = 'biber --validate-datamodel %O %S';
 sub fix_paths_and_run {
   my @args = ();
   @args = ();
