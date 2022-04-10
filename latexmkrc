@@ -19,5 +19,5 @@ sub fix_paths_and_run {
   system $command;
 }
 
-@default_files = glob("images/*.tex");
+@default_files = glob("assets/*.tex");
 push @default_files, "main.tex";
