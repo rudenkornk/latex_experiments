@@ -443,6 +443,37 @@ M dash - Стандартное тире\\
     \item неразрывные пробелы в~предложениях.
 \end{itemize}
 
+
+\href{https://www.semipol.de/posts/2018/06/latex-best-practices-lessons-learned-from-writing-a-phd-thesis/}{From best practices:}
+
+LaTeX distinguishes between different types of spaces.
+Generally, a space is treated as an inter-word space as long as the character before the space is not a period.
+A period is thus interpreted as the end of a sentence and the following space is assumed to be an inter-sentence space.
+Thus, if you use an abbreviation with a period at the end, you have instructed LaTeX that this period does not end the current sentence by escaping the following space:
+\begin{minted}{tex}
+    This is a sentence w.\ a forced inter-word space.
+\end{minted}
+This is a sentence w.\ a forced inter-word space.
+
+If you don’t do this, you randomly get larger spaces after abbreviations that interrupt the visual flow.
+One exception to this rule is if the period is preceded by a capital letter.
+In this case, LaTeX assumes an abbreviation and continues to use an inter-word space.
+You can reverse this behavior by placing an \\@ before the period.
+\begin{minted}{tex}
+    This is done by XYZ\@. This is a new sentence.
+\end{minted}
+This is done by XYZ\@. This is a new sentence.
+
+If you are using common abbreviations in English, \eg{} this one, \ie{} exempli gratia, you can use the foreign package to get commands that handle the spacing correctly:
+
+\begin{minted}{tex}
+    This is an example, \eg{} spacing is right here.
+\end{minted}
+This is an example, \eg{} spacing is right here.
+
+
+
+
 \subsection{Пакет siunitx}
 \begin{tabular}{r}
     \SI{5}{\meter\per\second}\\
