@@ -429,9 +429,6 @@ M dash - Стандартное тире\\
 
 "--* Прямая речь
 
-\subsection{Кавычки}
-<<Елочки и ,,лапки``>>
-
 \subsection{Пробелы}
 
 В русском наборе принято:
@@ -504,6 +501,45 @@ mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
 \blockquote[{\autocite{Spengler2012}}]{Another interesting quote.}
 
 \blockquote[{\autocite{TheMendeleySupportTeam2011}}]{Third interesting quote.}
+
+\subsection{Кавычки}
+<<Елочки и ,,лапки``>>
+
+\href{https://www.semipol.de/posts/2018/06/latex-best-practices-lessons-learned-from-writing-a-phd-thesis/}{From best practices:}
+If you want to avoid remembering how each language and publisher style handles quotation marks, simply use the csquotes package, which automatically selects the correct way for the current document language:
+\begin{minted}{tex}
+    \textquote{this is the quoted text}
+\end{minted}
+\textquote{this is the quoted text}
+
+If the quotation is actually from another publication that has to be cited, you can use the following shortcut to also get the correct citation through BibLaTeX:
+\begin{minted}{tex}
+    % 42 is the pagenumber
+    \textcquote[42]{Spengler2012}{this is the quoted text}
+\end{minted}
+\textcquote[42]{Spengler2012}{this is the quoted text}
+
+If your quotation is a sentence that ends with a period, some languages have different rules whether to include the period in the quotation marks or not.
+csquotes can handle these cases automatically (and with configuration options), but you have to indicate the final period manually:
+\begin{minted}{tex}
+    \textcquote[42]{Spengler2012}[.]{This is a full sentence with period}
+\end{minted}
+\textcquote[42]{Spengler2012}[.]{This is a full sentence with period}
+
+Finally, it is common to strip some parts of quoted material or add annotations to make it understandable in the current context.
+csquotes provides command for these purposes so that you do not have to remember the exact rules in each language.
+For instance, to replace some fraction with a summary you can use:
+\begin{minted}{tex}
+    \textcquote[42]{Spengler2012}[.]{This is \textelp{garbage} with  period}
+\end{minted}
+\textcquote[42]{Spengler2012}[.]{This is \textelp{garbage} with  period}
+
+
+
+
+
+
+
 
 
 \section{Объявление новых команд и окружений}
