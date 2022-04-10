@@ -37,7 +37,7 @@ if __name__ == '__main__':
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("-b", "--build_dir", type=Path, dest="build_dir", default="build",
                         help="Build directory")
-    parser.add_argument("-i", "--images_dir", type=Path, dest="images_dir", default="images",
+    parser.add_argument("-i", "--images_dir", type=Path, dest="images_dir", default="assets",
                         help="Directory with images to compile")
     args = parser.parse_args(sys.argv[1:])
     build_dir = args.build_dir
