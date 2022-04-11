@@ -31,3 +31,4 @@ if __name__ == '__main__':
             f.write(formatted_xml)
     else:
         print(formatted_xml)
+
