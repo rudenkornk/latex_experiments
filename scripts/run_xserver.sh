@@ -20,3 +20,4 @@ if [[ ! $(pidof Xvfb) ]]; then
     Xvfb $DISPLAY &
   fi
 fi
+
