@@ -9,31 +9,23 @@ on:
 jobs:
   build:
     runs-on: "ubuntu-20.04"
+    container:
+      image: rudenkornk/docker_latex:0.3.0
+      options: --entrypoint /home/ci_user/entrypoint.sh
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-    - name: Set environment
+    - name: Install prerequisites
       run: |
-        DOCKER_CONTAINER_NAME=docker_latex_container
-        DOCKER_IMAGE_NAME=rudenkornk/docker_latex
-        DOCKER_IMAGE_TAG=$DOCKER_IMAGE_NAME:0.2.1
-        echo "DOCKER_CONTAINER_NAME=$DOCKER_CONTAINER_NAME" >> $GITHUB_ENV
-        echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_ENV
-        echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
-    - name: Run container
+        /home/ci_user/config_github_actions.sh
+    - name: Build
       run: |
-        docker pull $DOCKER_IMAGE_TAG
-        docker run --interactive --tty --detach \
-          --env CI_UID="$(id --user)" --env CI_GID="$(id --group)" \
-          --name $DOCKER_CONTAINER_NAME \
-          --mount type=bind,source="$(pwd)",target=/home/repo \
-          $DOCKER_IMAGE_TAG
-        sleep 1
-    - name: Compile LaTeX document
+        make main
+    - name: Clean
       run: |
-        docker exec $DOCKER_CONTAINER_NAME bash -c "source ~/.profile && make main"
+        make clean
     - name: Upload a build artifact
       uses: actions/upload-artifact@v3
       with:
