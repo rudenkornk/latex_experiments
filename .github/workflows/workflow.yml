@@ -7,69 +7,36 @@ on:
     branches:
     - main
 jobs:
-  build_drawio:
-    runs-on: ubuntu-latest
-    outputs:
-      images_exists: ${{ steps.check_images.outputs.files_exists }}
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Check for drawio files
-      id: check_images
-      run: |
-        pip3 install lxml
-        res=$(python3 ./scripts/check_drawio_images.py -i assets)
-        if [[ $res ]]; then
-          echo "::set-output name=files_exists::true"
-        else
-          echo "::set-output name=files_exists::false"
-        fi
-    - name: Install packages
-      if: steps.check_images.outputs.files_exists == 'true'
-      run: |
-        sudo apt-get install msttcorefonts
-        sudo apt install xvfb
-        wget https://github.com/jgraph/drawio-desktop/releases/download/v14.6.13/drawio-amd64-14.6.13.deb
-        sudo apt install ./drawio*.deb
-    - name: Compile images
-      if: steps.check_images.outputs.files_exists == 'true'
-      run: python3 ./scripts/compile_drawio_images.py
-    - name: Upload images
-      uses: actions/upload-artifact@v2
-      with:
-        name: images
-        path: build/
-        if-no-files-found: ignore
-
   build:
-    needs: build_drawio
-    runs-on: ubuntu-latest
-    # See https://github.com/xu-cheng/latex-docker
-    container:
-      image: ghcr.io/xu-cheng/texlive-full:latest
-      options: --workdir /home/latex
+    runs-on: "ubuntu-20.04"
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Download images
-      if: needs.build_drawio.outputs.images_exists == 'true'
-      uses: actions/download-artifact@v2
+      uses: actions/checkout@v3
       with:
-        name: images
-        path: build/
-    - name: Install more fonts
+        ref: ${{ github.event.pull_request.head.sha }}
+    - name: Set environment
       run: |
-        apk --no-cache add msttcorefonts-installer fontconfig
-        update-ms-fonts
-        fc-cache -f
-        mktextfm larm1000
-        mktextfm larm1200
+        DOCKER_CONTAINER_NAME=docker_latex_container
+        DOCKER_IMAGE_NAME=rudenkornk/docker_latex
+        DOCKER_IMAGE_TAG=$DOCKER_IMAGE_NAME:0.2.1
+        echo "DOCKER_CONTAINER_NAME=$DOCKER_CONTAINER_NAME" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_NAME=$DOCKER_IMAGE_NAME" >> $GITHUB_ENV
+        echo "DOCKER_IMAGE_TAG=$DOCKER_IMAGE_TAG" >> $GITHUB_ENV
+    - name: Run container
+      run: |
+        docker pull $DOCKER_IMAGE_TAG
+        docker run --interactive --tty --detach \
+          --env CI_UID="$(id --user)" --env CI_GID="$(id --group)" \
+          --name $DOCKER_CONTAINER_NAME \
+          --mount type=bind,source="$(pwd)",target=/home/repo \
+          $DOCKER_IMAGE_TAG
+        sleep 1
     - name: Compile LaTeX document
-      run: latexmk -interaction=nonstopmode -f
+      run: |
+        docker exec $DOCKER_CONTAINER_NAME bash -c "source ~/.profile && make main"
     - name: Upload a build artifact
-      uses: actions/upload-artifact@v2
-      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
       with:
-        if-no-files-found: ignore
         name: output
         path: build/main.pdf
+
