@@ -3,6 +3,8 @@ SHELL = /usr/bin/env bash
 BUILD_DIR ?= build
 ASSETS_DIR ?= assets
 DRAWIO_CMD ?= drawio
+BUILD_OPTIONS ?=
+BUILD_OPTIONS := $(BUILD_OPTIONS)
 MAIN := main
 
 DRAWIO_IMAGES :=
@@ -24,7 +26,7 @@ $(DRAWIO_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.xml
 	$(DRAWIO_CMD) --transparent --crop --export --output $@ $< --no-sandbox
 
 $(TEX_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.tex
-	latexmk --output-directory=$(BUILD_DIR) --interaction=nonstopmode $<
+	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $<
 	touch $@ && file $@ | grep --quiet ' PDF '
 
 $(BUILD_DIR)/$(MAIN).pdf: $(MAIN_DEPS)

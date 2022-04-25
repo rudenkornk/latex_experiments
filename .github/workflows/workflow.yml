@@ -21,7 +21,7 @@ jobs:
         /home/ci_user/config_github_actions.sh
     - name: Build
       run: |
-        make main
+        BUILD_OPTIONS="--interaction=nonstopmode" make main
     - name: Clean
       run: |
         make clean
