@@ -1,8 +1,9 @@
 SHELL = /usr/bin/env bash
 
-BUILD_DIR ?= build
-ASSETS_DIR ?= assets
+BUILD_DIR := build
+ASSETS_DIR := assets
 DRAWIO_CMD ?= drawio
+DRAWIO_CMD := $(DRAWIO_CMD)
 BUILD_OPTIONS ?=
 BUILD_OPTIONS := $(BUILD_OPTIONS)
 MAIN := main
