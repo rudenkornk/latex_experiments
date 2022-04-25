@@ -9,19 +9,14 @@ on:
 jobs:
   build:
     runs-on: "ubuntu-20.04"
-    container:
-      image: rudenkornk/docker_latex:0.4.0
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-    - name: Install prerequisites
-      run: |
-        /home/ci_user/config_github_actions.sh
     - name: Build
       run: |
-        BUILD_OPTIONS="--interaction=nonstopmode" make main
+        make in_docker
     - name: Clean
       run: |
         make clean
