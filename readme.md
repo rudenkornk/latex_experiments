@@ -4,21 +4,14 @@
 
 A simple template for LaTeX projects
 
-## Prerequisites for build
-Run docker container with all needed packages installed:
+## Build
+### Option 1: Use docker container with all required packages installed:
 ```shell
-docker run --interactive --tty \
-  --user ci_user \
-  --env CI_UID="$(id --user)" --env CI_GID="$(id --group)" \
-  --mount type=bind,source="$(pwd)",target=/home/repo \
-  rudenkornk/docker_latex:latest
+DOCKER_TARGET=main make in_docker
 ```
 
-OR
-
-Or config your system [using provided scripts from docker repo](https://github.com/rudenkornk/docker_latex#3-use-scripts-from-this-repository-to-setup-your-own-system)
-
-## Build
+### Option 2: config your system with provided scripts
+Config your system [using provided scripts from docker repo](https://github.com/rudenkornk/docker_latex#3-use-scripts-from-this-repository-to-setup-your-own-system) and run:
 ```shell
 make main
 ```
