@@ -30,7 +30,7 @@ $(TEX_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.tex
 	touch $@ && file $@ | grep --quiet ' PDF '
 
 $(BUILD_DIR)/$(MAIN).pdf: $(MAIN_DEPS)
-	latexmk --output-directory=$(BUILD_DIR) --interaction=nonstopmode $(MAIN).tex
+	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $(MAIN).tex
 	touch $@ && file $@ | grep --quiet ' PDF '
 
 .PHONY: continuous
