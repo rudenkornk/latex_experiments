@@ -411,6 +411,54 @@ $2+2$
     $2+2=4$
 \end{solution}
 
+Если после названия теоремы сразу идет список, то он будет отображаться некорректно.
+\begin{minted}{tex}
+  \begin{theorem}
+    \begin{enumerate}
+      \item
+      \item
+    \end{enumerate}
+  \end{theorem}
+\end{minted}
+\begin{theorem}
+  \begin{enumerate}
+    \item
+    \item
+  \end{enumerate}
+\end{theorem}
+
+Чтобы этого избежать нужно использовать \mintinline{tex}{\leavevmode} для доказательств (\mintinline{tex}{proof}) и \mintinline{tex}{\leavevmode\vspace{-1.4em}} для всего остального:
+\begin{minted}{tex}
+  \begin{theorem}
+    \leavevmode\vspace{-1.4em}
+    \begin{enumerate}
+      \item
+      \item
+    \end{enumerate}
+  \end{theorem}
+  \begin{proof}
+    \leavevmode
+    \begin{enumerate}
+      \item
+      \item
+    \end{enumerate}
+  \end{proof}
+\end{minted}
+\begin{theorem}
+  \leavevmode\vspace{-1.4em}
+  \begin{enumerate}
+    \item
+    \item
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item
+    \item
+  \end{enumerate}
+\end{proof}
+
 \section{Гиперссылки}
 
 Caйт МФТИ \url{https://mipt.ru/}
