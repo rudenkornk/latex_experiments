@@ -48,6 +48,9 @@ $(BUILD_DIR)/$(MAIN).pdf: $(MAIN_DEPS)
 continuous: $(MAIN_DEPS)
 	latexmk --output-directory=$(BUILD_DIR) --interaction=nonstopmode $(MAIN).tex -pvc
 
+.PHONY: lint
+lint: $(MAIN_DEPS)
+
 .PHONY: check
 check: $(BUILD_DIR)/$(MAIN).pdf
 
