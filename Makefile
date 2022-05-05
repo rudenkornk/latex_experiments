@@ -24,7 +24,7 @@ KEEP_CI_USER_SUDO ?= false
 KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
 DOCKER_TARGET ?= main
 DOCKER_TARGET := $(DOCKER_TARGET)
-DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:0.4.0
+DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:0.4.1
 DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
 DOCKER_CONTAINER_NAME ?= docker_latex_container
 DOCKER_CONTAINER_NAME := $(DOCKER_CONTAINER_NAME)
@@ -36,13 +36,17 @@ main: $(BUILD_DIR)/$(MAIN).pdf
 $(DRAWIO_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.xml
 	$(DRAWIO_CMD) --transparent --crop --export --output $@ $< --no-sandbox
 
+.PHONY: $(TEX_IMAGES) # let latexmk decide whether to recompile the document
 $(TEX_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.tex
 	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $<
-	touch $@ && file $@ | grep --quiet ' PDF '
+	# latexmk may exit with false-positive success, thus double-check it with pdfinfo
+	pdfinfo $@ &> /dev/null
 
+.PHONY: $(BUILD_DIR)/$(MAIN).pdf # let latexmk decide whether to recompile the document
 $(BUILD_DIR)/$(MAIN).pdf: $(MAIN_DEPS)
 	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $(MAIN).tex
-	touch $@ && file $@ | grep --quiet ' PDF '
+	# latexmk may exit with false-positive success, thus double-check it with pdfinfo
+	pdfinfo $@ &> /dev/null
 
 .PHONY: continuous
 continuous: $(MAIN_DEPS)
@@ -53,6 +57,11 @@ lint: $(MAIN_DEPS)
 
 .PHONY: check
 check: $(BUILD_DIR)/$(MAIN).pdf
+	for i in \
+		$(TEX_IMAGES) \
+		$(DRAWIO_IMAGES) \
+		$(BUILD_DIR)/$(MAIN).pdf \
+		; do pdfinfo $$i; done
 
 .PHONY: clean
 clean:
