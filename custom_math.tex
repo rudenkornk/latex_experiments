@@ -1,0 +1,195 @@
+\makeatletter
+\NewDocumentCommand{\swapcommands}{m m}{%
+  \let\@swapcommands #1%
+  \let #1 #2%
+  \let #2\@swapcommands%
+}
+\makeatother
+
+\makeatletter
+\NewDocumentCommand{\wrapensuremath}{m}{%
+  % Throw error, if "\N#1" is already defined.
+  \expandafter\@ifdefinable\csname #1@ensuremath\endcsname{%
+    % Save old meaning
+    \expandafter
+    \let\csname #1@ensuremath\expandafter\endcsname
+    \csname #1\endcsname
+    % Define new macro
+    \expandafter\edef\csname #1\endcsname{%
+      \noexpand\ensuremath{%
+        \expandafter\noexpand\csname #1@ensuremath\endcsname
+      }%
+    }%
+  }%
+}
+\makeatother
+
+% Parse curly or round brackets
+\makeatletter
+\NewDocumentCommand{\@PCRB}{m m}{
+  \IfNoValueTF{#1}{\IfNoValueTF{#2}{}{\quantity(#2)}}
+  {#1 \IfNoValueTF{#2}{}{(#2)}}
+}
+% Parse math operator
+\NewDocumentCommand{\parsemathoperator}{m m m}{
+  \ensuremath{#1\@PCRB{#2}{#3}}
+}
+\makeatother
+
+%=============================== Theorems ===============================
+\newtheoremstyle{plainbreak}
+{}%                                  % Space above, empty = `usual value'
+{}%                                  % Space below
+{\rmfamily}%                         % Body font
+{}%                                  % Indent amount (empty = no indent, \parindent = para indent)
+{\bfseries}%                         % Thm head font
+{}%                                  % Punctuation after thm head
+{\newline}%                          % Space after thm head: \newline = linebreak
+{}%                                  % Thm head spec
+
+\theoremstyle{plainbreak}
+% Name in code, name in text, counter dependency
+\IfLanguageName{russian}{
+  \NewDocumentCommand{\TheoremName}{}{Теорема}
+  \NewDocumentCommand{\PropositionName}{}{Утверждение}
+  \NewDocumentCommand{\CorollaryName}{}{Следствие}
+  \NewDocumentCommand{\LemmaName}{}{Лемма}
+  \NewDocumentCommand{\ExampleName}{}{Пример}
+  \NewDocumentCommand{\ExamplesName}{}{Примеры}
+  \NewDocumentCommand{\ProblemName}{}{Упражнение}
+  \NewDocumentCommand{\DefinitionName}{}{Определение}
+  \NewDocumentCommand{\DenotationName}{}{Обозначение}
+  \NewDocumentCommand{\RemarkName}{}{Замечание}
+  \NewDocumentCommand{\SolutionName}{}{Решение}
+}{}
+\IfLanguageName{english}{
+  \NewDocumentCommand{\TheoremName}{}{Theorem}
+  \NewDocumentCommand{\PropositionName}{}{Proposition}
+  \NewDocumentCommand{\CorollaryName}{}{Corollary}
+  \NewDocumentCommand{\LemmaName}{}{Lemma}
+  \NewDocumentCommand{\ExampleName}{}{Example}
+  \NewDocumentCommand{\ExamplesName}{}{Examples}
+  \NewDocumentCommand{\ProblemName}{}{Problem}
+  \NewDocumentCommand{\DefinitionName}{}{Definition}
+  \NewDocumentCommand{\DenotationName}{}{Denotation}
+  \NewDocumentCommand{\RemarkName}{}{Remark}
+  \NewDocumentCommand{\SolutionName}{}{Solution}
+}{}
+\newtheorem{theorem}{\TheoremName}[section]
+% Counter here is placed in between, which means that it is not dependent but the same counter
+\newtheorem{proposition}[theorem]{\PropositionName}
+\newtheorem{corollary}{\CorollaryName}[theorem]
+\newtheorem{lemma}[theorem]{\LemmaName}
+\newtheorem*{example}{\ExampleName}
+\newtheorem*{examples}{\ExamplesName}
+\newtheorem{problem}{\ProblemName}[section]
+\newtheorem{definition}{\DefinitionName}[section]
+\newtheorem{denotation}[definition]{\DenotationName}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{\RemarkName}
+\newtheorem*{solution}{\SolutionName}
+
+%=============================== Russian typography ===============================
+\swapcommands{\epsilon}{\varepsilon}
+\swapcommands{\phi}{\varphi}
+\swapcommands{\kappa}{\varkappa}
+\swapcommands{\emptyset}{\varnothing}
+\swapcommands{\le}{\leqslant}
+\swapcommands{\ge}{\geqslant}
+
+%=============================== Ensure math for common symbols ===============================
+% Uppercase versions are already defined
+\wrapensuremath{alpha}
+\wrapensuremath{beta}
+\wrapensuremath{gamma}
+\wrapensuremath{delta}
+\wrapensuremath{epsilon}
+\wrapensuremath{zeta}
+\wrapensuremath{eta}
+\wrapensuremath{theta}
+\wrapensuremath{iota}
+\wrapensuremath{kappa}
+\wrapensuremath{lambda}
+\wrapensuremath{mu}
+\wrapensuremath{nu}
+\wrapensuremath{xi}
+\wrapensuremath{pi}
+\wrapensuremath{rho}
+\wrapensuremath{sigma}
+\wrapensuremath{tau}
+\wrapensuremath{upsilon}
+\wrapensuremath{phi}
+\wrapensuremath{chi}
+\wrapensuremath{psi}
+\wrapensuremath{omega}
+\wrapensuremath{iff}
+\wrapensuremath{rightarrow}
+\wrapensuremath{leftarrow}
+\wrapensuremath{implies}
+\wrapensuremath{impliedby}
+
+%=============================== Common math ===============================
+% \mathcal and \mathbb or \mathscr fonts can be useful here
+
+\NewDocumentCommand{\aqty}{m}{\ensuremath{\left<#1\right>}}
+\NewDocumentCommand{\n}{m}{\ensuremath{\centernot{#1}}}
+\NewDocumentCommand{\x}{}{\ensuremath{\times}}
+\NewDocumentCommand{\ox}{}{\ensuremath{\otimes}}
+\NewDocumentCommand{\transpose}{m}{#1^\top}
+\NewDocumentCommand{\T}{}{^\top}
+\NewDocumentCommand{\orthogonal}{}{^\top}
+\NewDocumentCommand{\ort}{}{^\top}
+\NewDocumentCommand{\herm}{}{^\dagger}
+\NewDocumentCommand{\suchthat}{}{\colon}
+\NewDocumentCommand{\func}{m m m}{\ensuremath{#1\colon #2\rightarrow #3}} % Function: X -> Y
+\NewDocumentCommand{\isomorph}{}{\ensuremath{\cong}}
+\NewDocumentCommand{\divby}{}{\mathrel{\rotatebox{90}{\ensuremath{\hskip-1pt.{}.{}.}}}}
+\NewDocumentCommand{\ord}{g d()}{\parsemathoperator{\operatorname{ord}}{#1}{#2}}
+\NewDocumentCommand{\sgn}{g d()}{\parsemathoperator{\operatorname{sgn}}{#1}{#2}}
+\NewDocumentCommand{\Id }{g d()}{\parsemathoperator{\operatorname{Id}}{#1}{#2}}
+
+%=============================== Sets ===============================
+\NewDocumentCommand{\set}{m m}{\ensuremath{\qty{#1\colon #2}}}
+\NewDocumentCommand{\powerset}{g d()}{\parsemathoperator{\mathcal{P}}{#1}{#2}}
+\NewDocumentCommand{\permset}{g d()}{\parsemathoperator{\mathcal{S}}{#1}{#2}}
+\NewDocumentCommand{\N}{}{\ensuremath{\mathbb{N}}}
+\NewDocumentCommand{\Z}{}{\ensuremath{\mathbb{Z}}}
+\NewDocumentCommand{\Q}{}{\ensuremath{\mathbb{Q}}}
+\NewDocumentCommand{\R}{}{\ensuremath{\mathbb{R}}}
+\RenewDocumentCommand{\C}{}{\ensuremath{\mathbb{C}}} % was U+030F "COMBINING DOUBLE GRAVE ACCENT".
+\NewDocumentCommand{\union}{}{\ensuremath{\cup}}
+\NewDocumentCommand{\intxn}{}{\ensuremath{\cap}}
+\NewDocumentCommand{\Union}{}{\ensuremath{\bigcup}}
+\NewDocumentCommand{\Intxn}{}{\ensuremath{\bigcap}}
+
+%=============================== Mathematical logic ===============================
+\NewDocumentCommand{\imply}{}{\ensuremath{\:\rightarrow\:}}
+\NewDocumentCommand{\implied}{}{\ensuremath{\:\leftarrow\:}}
+\NewDocumentCommand{\eqdef}{}{\ensuremath{\:\longleftrightarrow\:}}
+\swapcommands{\equiv}{\eqdef}
+\NewDocumentCommand{\iffdef}{}{\ensuremath{\aqty{\eqdef}}} % iff by definition
+\NewDocumentCommand{\eqsym}{}{\ensuremath{\eqcirc}} % Equivalent symbol by symbol
+\NewDocumentCommand{\A}{m g d()}{\parsemathoperator{\forall #1\:}{#2}{#3}}
+\NewDocumentCommand{\E}{m g d()}{\parsemathoperator{\exists #1\:}{#2}{#3}}
+\RenewDocumentCommand{\a}{}{\ensuremath{\land}}
+\RenewDocumentCommand{\o}{}{\ensuremath{\lor}}   % was little emptyset
+
+
+%=============================== Group theory ===============================
+\RenewDocumentCommand{\ker}{g d()}{\parsemathoperator{\operatorname{ker}}{#1}{#2}} % improvement of previous ker
+\NewDocumentCommand{\imag}{g d()}{\parsemathoperator{\operatorname{im}}{#1}{#2}}
+\NewDocumentCommand{\subgr}{}{\ensuremath{\leqslant}}
+\NewDocumentCommand{\rsubgr}{}{\ensuremath{\geqslant}}
+\NewDocumentCommand{\normsubgr}{}{\ensuremath{\trianglelefteqslant}}
+\NewDocumentCommand{\rnormsubgr}{}{\ensuremath{\trianglerighteqslant}}
+\NewDocumentCommand{\grcenter}{g d()}{\parsemathoperator{\operatorname{Z}}{#1}{#2}}
+\NewDocumentCommand{\centralizer}{m g d()}{\parsemathoperator{\operatorname{C}_{#1}}{#2}{#3}}
+\NewDocumentCommand{\normalizer}{m g d()}{\parsemathoperator{\operatorname{N}_{#1}}{#2}{#3}}
+\NewDocumentCommand{\factorgr}{m m}{\ensuremath{\nicefrac{#1}{#2}}}
+\NewDocumentCommand{\rfactorgr}{m m}{%
+  \reflectbox{%
+    \nicefrac{\reflectbox{\ensuremath{#1}}}%
+    {\reflectbox{\ensuremath{#2}}}}%
+}
+

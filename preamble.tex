@@ -1,8 +1,7 @@
 % Filter warnings
 \RequirePackage{silence}
+\WarningFilter{microtype}{Unknown slot number of character}
 % \WarningFilter{<package>}{<warning message>}
-% \WarningFilter{latexfont}{Some font shapes}
-% \WarningFilter{scrreprt}{Activating an ugly workaround}
 
 % Detect bad practices
 \RequirePackage[l2tabu, orthodox]{nag}
@@ -19,10 +18,14 @@
 % Encodings
 \usepackage[T1,T2A]{fontenc}
 \usepackage{fontspec}
-\usepackage[english,russian]{babel}
-\selectlanguage{english}
+\usepackage{iflang}
+\usepackage[russian,english]{babel} % switch to change main language
+\defaultfontfeatures{Renderer=Basic,Ligatures={TeX}}
+\setmainfont{CMU Serif}
+\setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text}
 
-% Automatic spacing for abbreviations like e.g.
+% Abbreviations: \eg{} \ie{} \etc{} \etal{}
 \usepackage[abbreviations,british]{foreign}
 
 \usepackage[useregional]{datetime2}
@@ -40,8 +43,13 @@
 
 % Margins
 \usepackage{geometry}
+% Set up margins
+\geometry{top=20mm}
+\geometry{bottom=20mm}
+\geometry{left=10mm}
+\geometry{right=10mm}
 
-% Centered sections
+% Centered section
 \usepackage{sectsty}
 
 % More intelligent hyphenation
@@ -52,26 +60,59 @@
 \usepackage{tabularx,tabulary}
 \usepackage{longtable}
 \usepackage{multirow}
+\newcolumntype{x}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
 
 % Pictures
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{epstopdf}
 \usepackage{adjustbox}
+\graphicspath{{assets/}{build/images/}{build/}}
+\epstopdfsetup{outdir=build/}
+
+% Graphics
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usepackage{pgfplotstable}
+
+% Code highlighting
+\usepackage[outputdir=build,newfloat]{minted}
+\setminted[tex]{frame=leftline,breaklines}
+\setmintedinline{breaklines}
+
+% Picture box margins
+\setlength\fboxsep{3pt}
+\setlength\fboxrule{1pt}
 
 % Bibliography
 \usepackage[backend=biber,
-    bibencoding=utf8,
-    sorting=nty,
-    maxcitenames=2,
-    style=numeric-comp]
+  bibencoding=utf8,
+  sorting=nty,
+  maxcitenames=2,
+  style=numeric-comp]
 {biblatex}
+\addbibresource{bibliography.bib}
 
 % Search in PDF document
 \usepackage{cmap}
 
-\usepackage{hyperref}
-\usepackage[font=small,figurename=Рисунок]{caption}
+\usepackage[font=small]{caption}
+\usepackage{subcaption}
+\captionsetup[figure]{
+  labelformat=simple,
+  labelsep=endash,
+  justification=centering
+}
+\captionsetup[listing]{
+  labelformat=simple,
+  labelsep=endash,
+  justification=centering
+}
+
+% Display formula number on the left
+%\usepackage{leqno}
 
 % Correct quotation
 \usepackage{fvextra}
@@ -80,6 +121,9 @@
 % First line indent
 \usepackage{indentfirst}
 \usepackage{parskip}
+
+% Center sections
+%\allsectionsfont{\centering}
 
 % Symbols like copyright, degree
 \usepackage{textcomp}
@@ -95,9 +139,27 @@
 
 % Header and footer
 \usepackage{fancyhdr}
+% Set up headers
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0mm}
+\lfoot{}
+\rfoot{}
+\rhead{}
+\chead{}
+\lhead{}
+%\cfoot{Нижний в центре}
 
 % Linespacing
 \usepackage{setspace}
+% First line indent
+\setlength{\parindent}{0cm}
+\frenchspacing
+%\singlespacing
+%\onehalfspacing
+%\doublespacing
+
+% Frames
+\usepackage{mdframed}
 
 % Russian letters in formulas
 \usepackage{mathtext}
@@ -120,99 +182,28 @@
 % Additional math symbols
 \usepackage{stmaryrd}
 
-% Code highlighting
-\usepackage[outputdir=build,newfloat]{minted}
-
 % \nicefrac \unitfrac and \unit command
 \usepackage{units}
 
 % \qty, \norm, \abs, \div, \grad, \curl, \laplacian, etc.
 \usepackage{physics}
 
-% Graphics
-\usepackage{tikz}
-\usetikzlibrary{matrix}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.16}
-\usepackage{pgfplotstable}
-
-
-%=============================== Customizations ===============================
-\defaultfontfeatures{Renderer=Basic,Ligatures={TeX}}
-\setmainfont{CMU Serif}
-\setsansfont{CMU Sans Serif}
-\setmonofont{CMU Typewriter Text}
-
-% Set linespacing
-%\singlespacing
-%\onehalfspacing
-%\doublespacing
-
-% Set up margins
-\geometry{top=20mm}
-\geometry{bottom=20mm}
-\geometry{left=10mm}
-\geometry{right=10mm}
-
-% Set up headers
-\pagestyle{fancy}
-\renewcommand{\headrulewidth}{0mm}
-\lfoot{}
-\rfoot{}
-\rhead{}
-\chead{}
-\lhead{}
-%\cfoot{Нижний в центре}
-
-\graphicspath{{assets/}{build/images/}{build/}}
-
-% Picture box margins
-\setlength\fboxsep{3pt}
-\setlength\fboxrule{1pt}
-
-\newcolumntype{x}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
-
-% First line indent
-\setlength{\parindent}{0cm}
-\frenchspacing
-
+\usepackage{hyperref} % Usually, it has to be the last package to be imported
 \hypersetup{
-    unicode=true,
-    pdftitle={Document title},
-    pdfauthor={Nikita Rudenko},
-    % False means refs in boxes, true means color refs
-    colorlinks=true,
-    linkcolor=red,
-    citecolor=blue,
-    filecolor=magenta,
-    urlcolor=blue
+  unicode=true,
+  pdftitle={\LaTeX{} notes},
+  pdfauthor={Nikita Rudenko},
+  % False means refs in boxes, true means color refs
+  colorlinks=true,
+  linkcolor=red,
+  citecolor=blue,
+  filecolor=magenta,
+  urlcolor=blue
 }
-
-\captionsetup[figure]{
-    labelformat=simple,
-    labelsep=endash,
-    justification=centering
-}
-
-\captionsetup[listing]{
-    labelformat=simple,
-    labelsep=endash,
-    justification=centering
-}
-
-\SetupFloatingEnvironment{listing}{name=Listing}
-
-% Center sections
-%\allsectionsfont{\centering}
 
 % Only show numbers if formula is referenced
 %\mathtoolsset{showonlyrefs=true}
 
-% Display formula number on the left
-%\usepackage{leqno}
-
-
-\addbibresource{bibliography.bib}
 
 %=============================== Support commands ===============================
 % Tracking changing labels to debug possible infinite runs
@@ -220,179 +211,29 @@
 \makeatletter
 \def\@testdef #1#2#3{%
   \def\reserved@a{#3}\expandafter \ifx \csname #1@#2\endcsname
- \reserved@a  \else
-\typeout{^^Jlabel #2 changed:^^J%
-\meaning\reserved@a^^J%
-\expandafter\meaning\csname #1@#2\endcsname^^J}%
-\@tempswatrue \fi}
+    \reserved@a  \else
+    \typeout{^^Jlabel #2 changed:^^J%
+      \meaning\reserved@a^^J%
+      \expandafter\meaning\csname #1@#2\endcsname^^J}%
+    \@tempswatrue \fi}
 \makeatother
 
-
-\makeatletter
-\NewDocumentCommand{\swapcommands}{m m}{%
-    \let\@swapcommands #1%
-    \let #1 #2%
-    \let #2\@swapcommands%
-}
-\NewDocumentCommand{\wrapensuremath}{m}{%
-    % Throw error, if "\N#1" is already defined.
-    \expandafter\@ifdefinable\csname #1@ensuremath\endcsname{%
-        % Save old meaning
-        \expandafter
-        \let\csname #1@ensuremath\expandafter\endcsname
-        \csname #1\endcsname
-        % Define new macro
-        \expandafter\edef\csname #1\endcsname{%
-            \noexpand\ensuremath{%
-                \expandafter\noexpand\csname #1@ensuremath\endcsname
-            }%
-        }%
-    }%
-}
-
-% Parse curly or round brackets
-\NewDocumentCommand{\@PCRB}{m m}{
-    \IfNoValueTF{#1}{\IfNoValueTF{#2}{}{\quantity(#2)}}
-    {#1 \IfNoValueTF{#2}{}{(#2)}}
-}
-% Parse math operator
-\NewDocumentCommand{\parsemathoperator}{m m m}{
-    \ensuremath{#1\@PCRB{#2}{#3}}
-}
-
-\makeatother
-
-
-%=============================== Russian typography ===============================
-\NewDocumentCommand{\varle}{}{\leqslant}
-\NewDocumentCommand{\varge}{}{\geqslant}
-\swapcommands{\epsilon}{\varepsilon}
-\swapcommands{\phi}{\varphi}
-\swapcommands{\kappa}{\varkappa}
-\swapcommands{\emptyset}{\varnothing}
-\swapcommands{\le}{\varle}
-\swapcommands{\ge}{\varge}
-
-%=============================== Ensure math for common symbols ===============================
-\wrapensuremath{alpha}
-\wrapensuremath{beta}
-\wrapensuremath{gamma}   %\wrapensuremath{Gamma}
-\wrapensuremath{delta}   %\wrapensuremath{Delta}
-\wrapensuremath{epsilon}
-\wrapensuremath{zeta}
-\wrapensuremath{eta}
-\wrapensuremath{theta}   %\wrapensuremath{Theta}
-\wrapensuremath{iota}
-\wrapensuremath{kappa}
-\wrapensuremath{lambda}  %\wrapensuremath{Lambda}
-\wrapensuremath{mu}
-\wrapensuremath{nu}
-\wrapensuremath{xi}      %\wrapensuremath{Xi}
-\wrapensuremath{pi}      %\wrapensuremath{Pi}
-\wrapensuremath{rho}
-\wrapensuremath{sigma}   %\wrapensuremath{Sigma}
-\wrapensuremath{tau}
-\wrapensuremath{upsilon} %\wrapensuremath{Upsilon}
-\wrapensuremath{phi}     %\wrapensuremath{Phi}
-\wrapensuremath{chi}
-\wrapensuremath{psi}     %\wrapensuremath{Psi}
-\wrapensuremath{omega}   %\wrapensuremath{Omega}
-\wrapensuremath{iff}
-\wrapensuremath{rightarrow}
-\wrapensuremath{leftarrow}
-\wrapensuremath{implies}
-\wrapensuremath{impliedby}
-
-%=============================== Common math ===============================
-\NewDocumentCommand{\aqty}{m}{\ensuremath{\left<#1\right>}}
-\NewDocumentCommand{\n}{m}{\ensuremath{\centernot{#1}}}
-\NewDocumentCommand{\x}{}{\ensuremath{\times}}
-\NewDocumentCommand{\ox}{}{\ensuremath{\otimes}}
-\NewDocumentCommand{\transpose}{m}{#1^\top}
-\NewDocumentCommand{\T}{}{^\top}
-\NewDocumentCommand{\orthogonal}{}{^\top}
-\NewDocumentCommand{\ort}{}{^\top}
-\NewDocumentCommand{\herm}{}{^\dagger}
-\NewDocumentCommand{\suchthat}{}{\colon}
-\NewDocumentCommand{\func}{m m m}{\ensuremath{#1\colon #2\rightarrow #3}} % Function: X -> Y
-\NewDocumentCommand{\isomorph}{}{\ensuremath{\cong}}
-\NewDocumentCommand{\divby}{}{\mathrel{\rotatebox{90}{\ensuremath{\hskip-1pt.{}.{}.}}}}
-\NewDocumentCommand{\ord}{g d()}{\parsemathoperator{\operatorname{ord}}{#1}{#2}}
-\NewDocumentCommand{\sgn}{g d()}{\parsemathoperator{\operatorname{sgn}}{#1}{#2}}
-\NewDocumentCommand{\Id }{g d()}{\parsemathoperator{\operatorname{Id}}{#1}{#2}}
-
-%=============================== Sets ===============================
-\NewDocumentCommand{\set}{m m}{\ensuremath{\qty{#1\colon #2}}}
-\NewDocumentCommand{\powerset}{g d()}{\parsemathoperator{\mathcal{P}}{#1}{#2}}
-\NewDocumentCommand{\permset}{g d()}{\parsemathoperator{\mathcal{S}}{#1}{#2}}
-\NewDocumentCommand{\N}{}{\ensuremath{\mathbb{N}}}
-\NewDocumentCommand{\Z}{}{\ensuremath{\mathbb{Z}}}
-\NewDocumentCommand{\Q}{}{\ensuremath{\mathbb{Q}}}
-\NewDocumentCommand{\R}{}{\ensuremath{\mathbb{R}}}
-\RenewDocumentCommand{\C}{}{\ensuremath{\mathbb{C}}} % was U+030F "COMBINING DOUBLE GRAVE ACCENT".
-\NewDocumentCommand{\union}{}{\ensuremath{\cup}}
-\NewDocumentCommand{\intxn}{}{\ensuremath{\cap}}
-\NewDocumentCommand{\Union}{}{\ensuremath{\bigcup}}
-\NewDocumentCommand{\Intxn}{}{\ensuremath{\bigcap}}
-
-%=============================== Mathematical logic ===============================
-\NewDocumentCommand{\imply}{}{\ensuremath{\:\rightarrow\:}}
-\NewDocumentCommand{\implied}{}{\ensuremath{\:\leftarrow\:}}
-\NewDocumentCommand{\eqdef}{}{\ensuremath{\:\longleftrightarrow\:}}
-\swapcommands{\equiv}{\eqdef}
-\NewDocumentCommand{\iffdef}{}{\ensuremath{\aqty{\eqdef}}} % iff by definition
-\NewDocumentCommand{\eqsym}{}{\ensuremath{\eqcirc}} % Equivalent symbol by symbol
-\NewDocumentCommand{\A}{m g d()}{\parsemathoperator{\forall #1\:}{#2}{#3}}
-\NewDocumentCommand{\E}{m g d()}{\parsemathoperator{\exists #1\:}{#2}{#3}}
-\RenewDocumentCommand{\a}{}{\ensuremath{\land}}
-\RenewDocumentCommand{\o}{}{\ensuremath{\lor}}   % was little emptyset
-
-
-%=============================== Group theory ===============================
-\RenewDocumentCommand{\ker}{g d()}{\parsemathoperator{\operatorname{ker}}{#1}{#2}} % improvement of previous ker
-\NewDocumentCommand{\imag}{g d()}{\parsemathoperator{\operatorname{im}}{#1}{#2}}
-\NewDocumentCommand{\subgr}{}{\ensuremath{\leqslant}}
-\NewDocumentCommand{\rsubgr}{}{\ensuremath{\geqslant}}
-\NewDocumentCommand{\normsubgr}{}{\ensuremath{\trianglelefteqslant}}
-\NewDocumentCommand{\rnormsubgr}{}{\ensuremath{\trianglerighteqslant}}
-\NewDocumentCommand{\grcenter}{g d()}{\parsemathoperator{\operatorname{Z}}{#1}{#2}}
-\NewDocumentCommand{\centralizer}{m g d()}{\parsemathoperator{\operatorname{C}_{#1}}{#2}{#3}}
-\NewDocumentCommand{\normalizer}{m g d()}{\parsemathoperator{\operatorname{N}_{#1}}{#2}{#3}}
-\NewDocumentCommand{\factorgr}{m m}{\ensuremath{\nicefrac{#1}{#2}}}
-\NewDocumentCommand{\rfactorgr}{m m}{%
-    \reflectbox{%
-        \nicefrac{\reflectbox{\ensuremath{#1}}}%
-        {\reflectbox{\ensuremath{#2}}}}%
-}
-
-
-
-
-%=============================== Theorems ===============================
-\newtheoremstyle{plainbreak}
-{}%                                  % Space above, empty = `usual value'
-{}%                                  % Space below
-{\rmfamily}%                         % Body font
-{}%                                  % Indent amount (empty = no indent, \parindent = para indent)
-{\bfseries}%                         % Thm head font
-{}%                                  % Punctuation after thm head
-{\newline}%                          % Space after thm head: \newline = linebreak
-{}%                                  % Thm head spec
-
-\theoremstyle{plainbreak}
-% Name in code, name in text, counter dependency
-\newtheorem{theorem}{Теорема}[section]
-% Counter here is placed in between, which means that it is not dependent but the same counter
-\newtheorem{proposition}[theorem]{Утверждение}
-\newtheorem{corollary}{Следствие}[theorem]
-\newtheorem{lemma}[theorem]{Лемма}
-\newtheorem*{example}{Пример}
-\newtheorem*{examples}{Примеры}
-\newtheorem{problem}{Задача}[section]
-\newtheorem{definition}{Определение}[section]
-\newtheorem{denotation}[definition]{Обозначение}
-
-\theoremstyle{remark}
-\newtheorem*{remark}{Замечание}
-\newtheorem*{solution}{Решение}
+% Environment variables support
+% Usage:
+% \getenv[\HOME]{HOME}\show\HOME
+% \getenv{HOME}
+\ExplSyntaxOn
+\NewDocumentCommand{\getenv}{om}
+ {
+  \sys_get_shell:nnN { kpsewhich ~ --var-value ~ #2 } { } \l_tmpa_tl
+  \tl_trim_spaces:N \l_tmpa_tl
+  \IfNoValueTF { #1 }
+   {
+    \tl_use:N \l_tmpa_tl
+   }
+   {
+    \tl_set_eq:NN #1 \l_tmpa_tl
+   }
+ }
+\ExplSyntaxOff
 
