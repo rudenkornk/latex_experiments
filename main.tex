@@ -226,7 +226,6 @@ It is also possible to wrap text around tables and images by placing them into \
 \begin{minted}{tex}
   \begin{table}
     \centering
-    \label{tab:table_example}
     \begin{tabular}{lll}
       \toprule
             & Column 1 & Column 2 \\
@@ -236,12 +235,12 @@ It is also possible to wrap text around tables and images by placing them into \
       \bottomrule
     \end{tabular}
     \caption{Table example}
+    \label{tab:table_example}
   \end{table}
 \end{minted}
 
 \begin{table}[h!]
   \centering
-  \label{tab:table_example}
   \begin{tabular}{lll}
     \toprule
           & Column 1 & Column 2 \\
@@ -251,6 +250,7 @@ It is also possible to wrap text around tables and images by placing them into \
     \bottomrule
   \end{tabular}
   \caption{Table example}
+  \label{tab:table_example}
 \end{table}
 
 There is a nice tutorial on \emph{overleaf} \autocite{Overleaf-tables-2018} and several useful tools for generating tables, like \href{https://www.tablesgenerator.com/latex_tables}{this} and \href{https://www.latex-tables.com/}{this}.
