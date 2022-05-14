@@ -1,434 +1,535 @@
 \input{preamble}
+\input{custom_math}
+\usepackage{lipsum}
 
-\author{Автор}
-\title{Шпаргалка по \LaTeX}
-\date{\today}
+\global\mdfdefinestyle{example}{%
+  leftline=false,%
+  rightline=true,%
+  topline=false,%
+  bottomline=false,%
+  innerleftmargin=0ex,%
+  linecolor=red,%
+  linewidth=2pt
+}
 
-\selectlanguage{russian}
+\author{Nikita Rudenko}
+\title{\LaTeX{} notes}
+\date{\the\year{}}
 
 \begin{document}
 \maketitle
 
-\renewcommand{\abstractname}{Краткое содержание}
+\renewcommand{\abstractname}{Abstract}
 \begin{abstract}
-    Текст аннотации
+  \LaTeX{} notes heavily inspired by \autocite{DanilFedorovykh-2016}.
 \end{abstract}
 
-\section{Шрифт и выравнивание}
-\subsection{Кегль}
-% Есть 3 способа использовать эти команды
-% 1. Без ничего они действуют на весь документ после себя
-\tiny крошечный
-
-\scriptsize очень маленький
-
-\footnotesize довольно маленький
-
-\small маленький
-
-\normalsize нормальный
-
-\large большой
-
-\Large еще больше
-
-\LARGE очень большой
-
-% 2. Можно использовать окружение
-\begin{huge}
-    огромный
-\end{huge}
-
-% 3. Можно заключать в фигурные скобки вместе с командой
-{\Huge громадный}
-\normalsize
-
-
-\subsection{Начертание}
-\textbf{Жирный},
-\textit{Курсив}
-
-\emph{Выделенный текст, \emph{внутри которого выделен} другой текст}
-
-\subsection{Выравнивание}
-% Удаляем колонтитулы
+\section{Fonts and alignment}
+\subsection{Alignment}
 \thispagestyle{empty}
-% Выравнивание по центру
-\begin{center}
-    Федеральное государственное автономное учреждение\\
-    МОСКОВСКИЙ ФИЗИКО-ТЕХНИЧЕСКИЙ ИНСТИТУТ
-\end{center}
-% Вертикальынй пробел
-\vspace{3ex}
-% Выравниванивание по правому краю
-\begin{flushright}
-    % Без красной строки
-    \noindent
-    Фамилия Имя Отчество
-\end{flushright}
+Center, left and right alignment with standard \mintinline{tex}{center}, \mintinline{tex}{flushright} and \mintinline{tex}{flushleft} environments.
+\begin{minted}{tex}
+  \begin{center}
+    Some text
+  \end{center}
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{center}
+    Some text
+  \end{center}
+\end{mdframed}
 
-\begin{multicols}{2}
-    Текст в двух колонках
+Add \mintinline{tex}{\noindent} command into these environments for disabling indent for the first line locally (if it is on).
+Insert vertical space with \mintinline{tex}{\vspace{3ex}} command.
+And create several columns with \mintinline{tex}{multicols} environment from \mintinline{tex}{multicol} package.
+\begin{minted}{tex}
+  \begin{multicols}{<number or columns>}
+    <Some text>
+  \end{multicols}
+\end{minted}
 
-    Текст в двух колонках
+\begin{mdframed}[style=example]
+  \begin{multicols}{2}
+    First column
 
-    Текст в двух колонках
+    Second column
+  \end{multicols}
+\end{mdframed}
 
-    Текст в двух колонках
-\end{multicols}
-
-Пробел до конца страницы
+Alignment, vertical spaces, local page styles are useful for creating first page.
+Remove headers and footers only on this page with \mintinline{tex}{\thispagestyle{empty}}.
+See also \mintinline{tex}{fancyhdr} package.
+Page break can be done with \mintinline{tex}{\newpage}
+Another command is \mintinline{tex}{\vfill}, which inserts vertical space to the end of page, except for the text following this command, \ie{} text is growing "upwards".
+\begin{minted}{tex}
+  \vfill
+  \begin{center}
+      MIPT
+  \end{center}
+\end{minted}
 \vfill
-\begin{center}
-    Москва 2014
-\end{center}
-\newpage
+\begin{mdframed}[style=example]
+  \begin{center}
+    MIPT
+  \end{center}
+\end{mdframed}
 
-\section{Математика}
-\subsection{Переходы в математический режим}
 
-% Формула внутри текста:
-Четыре --- это два плюс два: $2+2=4$
+\subsection{Font size}
+There three different ways of changing relative font size.
 
-% "Выключная" формула:
-Четыре --- это два плюс два: \[2+2=4\]
+\begin{enumerate}
+  \item Directive, which affects the whole document after it: \mintinline{tex}{\small}
+  \item Inline, which affects only the text in braces: \mintinline{tex}{{\small text}}
+  \item And environment:
+        \begin{minted}[framesep=-10ex]{tex}
+          \begin{small}
+            text
+          \end{small}
+        \end{minted}
+\end{enumerate}
 
-% Формула с номером, созданная с помощью окружения:
-\begin{equation}\label{eq:def4}
+List of relative font sizes:
+\begin{itemize}
+  \item {\tiny tiny}
+  \item {\scriptsize scriptsize}
+  \item {\footnotesize footnotesize}
+  \item {\small small}
+  \item {\normalsize normalsize}
+  \item {\large large}
+  \item {\Large Large}
+  \item {\LARGE LARGE}
+  \item {\huge huge}
+  \item {\Huge Huge}
+\end{itemize}
+
+\subsection{Emphasis}
+\begin{itemize}
+  \item \textbf{Bold}: \mintinline{tex}{\textbf{bold}}
+  \item \textit{Italics}: \mintinline{tex}{\textit{italics}}
+  \item \emph{Emphasized}: \mintinline{tex}{\emph{emphasized}}
+\end{itemize}
+
+\section{Typography}
+\subsection{Dashes}
+\begin{itemize}
+  \item N dash (--) \autocite{thesauruscom-en-dash-2022}: for ranges, such as years, pages, sports scores, etc.
+        \begin{minted}[framesep=-10ex]{tex}
+          Homework problems are on pages 10--15.
+          The home team won 2–-0.
+        \end{minted}
+        \begin{mdframed}[style=example]
+          Homework problems are on pages 10--15.
+          The home team won 2–-0.
+        \end{mdframed}
+  \item M dash (---) \autocite{thesauruscom-em-dash-2022}: common dash for missing sentence members. Can be in form of \verb|---| or \verb|"---|.
+        The latter is used in russian typesetting system.
+  \item Direct speech: \verb|"--*|
+\end{itemize}
+
+\subsection{Quotation marks}
+See articles on \emph{Overleaf} \autocite{Overleaf-quotes-2018} and \emph{Wikipedia} \autocite{Wikipedia-quotes-2006}.
+\begin{itemize}
+  \item "text"
+  \item <<text>>
+  \item ,,text``
+\end{itemize}
+
+\subsection{Spaces}
+From \citetitle{JohannesWienke-2018} \autocite{JohannesWienke-2018}:
+\LaTeX{} distinguishes between inter-word and inter-sentence spaces.
+Generally, a space is treated as an inter-word space as long as the character before the space is not a period.
+Thus, if you use an abbreviation with a period at the end, you have to instruct \LaTeX{} that this period does not end the current sentence by escaping the following space:
+\begin{minted}{tex}
+  This is a sentence w.\ a forced inter-word space.
+\end{minted}
+
+If you don’t do this, you randomly get larger spaces after abbreviations that interrupt the visual flow.
+One exception to this rule is if the period is preceded by a capital letter.
+In this case, \LaTeX{} assumes an abbreviation and continues to use an inter-word space.
+You can reverse this behavior by placing an \textbackslash @ before the period.
+\begin{minted}{tex}
+  This is done by XYZ\@. This is a new sentence.
+\end{minted}
+
+\LaTeX{} also has short space (\mintinline{tex}{\:}) and non-breakable space (\mintinline{tex}{~}).
+
+\section{Lists}
+Lists can be created with standard \mintinline{tex}{itemize} environment or \mintinline{tex}{enumerate} environment from \mintinline{tex}{enumitem} package.
+\begin{minted}{tex}
+  \begin{itemize}
+    \item First point
+    \item Second point
+    \item[*] Third point with custom bullet
+  \end{itemize}
+\end{minted}
+
+\begin{mdframed}[style=example]
+  \begin{itemize}
+    \item First point
+    \item Second point
+    \item[*] Third point with custom bullet
+  \end{itemize}
+\end{mdframed}
+
+\section{Images}
+Images can be included with \mintinline{tex}{\includegraphics} (requires \mintinline{tex}{graphicx} package), \mintinline{tex}{\adjincludegraphics} (requires \mintinline{tex}{graphicx} and \mintinline{tex}{adjustbox} packages) or \mintinline{tex}{\adjustimage} (also \mintinline{tex}{graphicx} and \mintinline{tex}{adjustbox} packages) commands.
+All three can scale images and the latter two can crop them.
+It is possible, but usually is not recommended to set up automatic conversion between different image sources and \mintinline{tex}{pdf}.
+Instead, it is better to use build system, such as \mintinline{tex}{make}.
+Conversion between \mintinline{tex}{eps} and \mintinline{tex}{pdf} is enabled though.
+
+\begin{minted}{tex}
+  \includegraphics[width=\textwidth/2]{drawio_example.pdf}
+  \adjincludegraphics[width=\textwidth/2, trim={{0.02\width} {.95\height} {.91\width} {0}},clip]{mathcha_example.pdf}
+  \adjustimage{max width=\textwidth/2, trim={{.6\width} {.45\height} {.25\width} {.43\height}},clip}{geogebra_example.pdf}
+\end{minted}
+
+\begin{figure}[!h]
+  \centering
+  \hfill
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \includegraphics[width=\textwidth/2]{drawio_example.pdf}
+    \caption{draw.io example}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \adjincludegraphics[width=\textwidth/2, trim={{0.02\width} {.95\height} {.91\width} {0}},clip]{mathcha_example.pdf}
+    \caption{Mathcha example}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \adjustimage{max width=\textwidth/2, trim={{.6\width} {.45\height} {.25\width} {.43\height}},clip}{geogebra_example.pdf}
+    \caption{GeoGebra example}
+  \end{subfigure}
+  \caption{Figure examples}
+\end{figure}
+
+There is a bunch of useful tools for math drawings and diagrams, such as \href{https://www.geogebra.org/}{GeoGebra}, \href{https://asymptote.sourceforge.io/}{Asymptote}, \href{https://www.mathcha.io/}{Mathcha}, \href{https://app.diagrams.net/}{draw.io}, \href{https://tikzcd.yichuanshen.de/}{tikzcd-editor}, \href{https://inkscape.org/}{Inkscape}, etc.
+Some of them support exporting to tikz or \LaTeX{} format.
+
+GeoGebra may use outdated syntax for circles drawing \autocite{Aalberto-2020}.
+This can be easily fixed in vim using the following command:
+\begin{minted}{vim}
+  :%s/circle (\(\%(\d\|\.\)\+\w\+\))/circle [radius=\1]/g
+\end{minted}
+
+\section{Tables}
+Tables can be created with standard \mintinline{tex}{tabular} environment or with \mintinline{tex}{tabularx}, \mintinline{tex}{tabulary} and \mintinline{tex}{longtable} environments from packages of the same name.
+\mintinline{tex}{tabularx} can justify columns by width, \mintinline{tex}{tabulary} by height and \mintinline{tex}{longtable} specializes on creating well\dots\ long tables.
+Nice formatting for tables can be done with \mintinline{tex}{booktabs} package.
+
+Tabular objects can be put into some environment, usually \mintinline{tex}{table}, which finds a suitable place for them.
+It is also possible to wrap text around tables and images by placing them into \mintinline{tex}{wraptable} and \mintinline{tex}{wrapfigure} environments from \mintinline{tex}{wrapfig} package.
+
+\begin{minted}{tex}
+  \begin{table}
+    \centering
+    \label{tab:table_example}
+    \begin{tabular}{lll}
+      \toprule
+            & Column 1 & Column 2 \\
+      \midrule
+      Row 1 & 1-1      & 1-2      \\
+      Row 2 & 2-1      & 2-2      \\
+      \bottomrule
+    \end{tabular}
+    \caption{Table example}
+  \end{table}
+\end{minted}
+
+\begin{table}[h!]
+  \centering
+  \label{tab:table_example}
+  \begin{tabular}{lll}
+    \toprule
+          & Column 1 & Column 2 \\
+    \midrule
+    Row 1 & 1-1      & 1-2      \\
+    Row 2 & 2-1      & 2-2      \\
+    \bottomrule
+  \end{tabular}
+  \caption{Table example}
+\end{table}
+
+There is a nice tutorial on \emph{overleaf} \autocite{Overleaf-tables-2018} and several useful tools for generating tables, like \href{https://www.tablesgenerator.com/latex_tables}{this} and \href{https://www.latex-tables.com/}{this}.
+
+\section{Math}
+\subsection{Math modes}
+There are different ways of entering math mode:
+\begin{itemize}
+  \item Inline math mode with \mintinline{tex}{$$}, for example \mintinline{tex}{$2+2=4$}: $2+2=4$. %stopzone
+        Inline mode tries to adjust formula size to the size of text.
+        It can be overridden with \mintinline{tex}{\displaystyle} command:
+        \begin{minted}[framesep=-10ex]{tex}
+          For example, inline $\frac{x}{y}$ and inline $\displaystyle \frac{x}{y}$.
+        \end{minted}
+        \begin{mdframed}[style=example]
+          For example, inline $\frac{x}{y}$ and inline $\displaystyle \frac{x}{y}$.
+        \end{mdframed}
+  \item Outline with \mintinline{tex}{\[\]}, for example \mintinline{tex}{\[2+2=4\]}
+        \begin{mdframed}[style=example]
+          \[2+2=4\]
+        \end{mdframed}
+  \item Environment with \mintinline{tex}{equation}.
+        \begin{minted}[framesep=-10ex]{tex}
+          \begin{equation}
+            2+2=4
+          \end{equation}
+        \end{minted}
+        \begin{mdframed}[style=example]
+          \begin{equation}
+            2+2=4
+          \end{equation}
+        \end{mdframed}
+\end{itemize}
+
+\mintinline{tex}{equation} and some other similar environments automatically add tag for referencing, as in the example above.
+This usually can be turned off with adding asterisk to environment name:
+\begin{minted}{tex}
+  \begin{equation*}
     2+2=4
-\end{equation}
+  \end{equation*}
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{equation*}
+    2+2=4
+  \end{equation*}
+\end{mdframed}
 
-% Пример ссылки:
-\eqref{eq:def4}  на стр. \pageref{eq:def4} --- определение числа 4.
+To actually be able to reference equation it has to have label on it.
+Also, it is possible to specify custom tag:
+\begin{minted}{tex}
+  \begin{equation} \tag{TAG} \label{eq:2}
+    2+2=4
+  \end{equation}
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{equation} \tag{TAG} \label{eq:2}
+    2+2=4
+  \end{equation}
+\end{mdframed}
 
-\subsection{Группирование формул}
-% Для того чтобы убрать нумерацию необходимо добавить "*" к названию окружения. Выравнивание формул осуществляется по знакам равенства с помощью "&" стоящих перед ними.
+\begin{minted}{tex}
+  See equation \eqref{eq:2} on page \pageref{eq:2}.
+\end{minted}
+\begin{mdframed}[style=example]
+  See equation \eqref{eq:2} on page \pageref{eq:2}.
+\end{mdframed}
 
-% Окружение align автоматически переходит в математический режим, тогда как alined нужно окружать самостоятельно. Взамен, aligned может быть частью более сложных конструкций.
-\begin{align}
-    1\times 1 & = 1 & 4\times 4   & = 16 \tag{TAG} \label{eq:sq} \\
-    2\times 2 & = 4 & 5\times 5   & = 25                         \\
+\subsection{Equation grouping}
+\mintinline{tex}{align} environment triggers math mode automatically.
+On the other hand \mintinline{tex}{alined} environment does not, but it can be a part of more complex structures.
+Both of these environments align elements in one column using \mintinline{tex}{&} hint, \ie{} odd \mintinline{tex}{&}'s are used for alignment and even \mintinline{tex}{&}'s are used for separating columns.
+\begin{minted}{tex}
+  \begin{align}
+    1\times 1 & = 1 & 4\times 4     & = 16    \\
+    2\times 2 & = 4 & 5\times 5     & = 25    \\
+    3\times 3 & = 9 & 60\times 60   & = 3600
+  \end{align}
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{align}
+    1\times 1 & = 1 & 4\times 4   & = 16   \\
+    2\times 2 & = 4 & 5\times 5   & = 25   \\
     3\times 3 & = 9 & 60\times 60 & = 3600
-\end{align}
+  \end{align}
+\end{mdframed}
 
-\begin{equation}
-    \begin{aligned}
-        1\times 1 & = 1 & 4\times 4   & = 16   \\
-        2\times 2 & = 4 & 5\times 5   & = 25   \\
-        3\times 3 & = 9 & 60\times 60 & = 3600
-    \end{aligned}
-\end{equation}
-% Пример ссылки на нестандартный тег:
-В уравнении \eqref{eq:sq} на стр. \pageref{eq:sq} много слагаемых.
+\subsection{Fractions}
+\mintinline{tex}{\dfrac} command does not adapt fraction size, whereas \mintinline{tex}{\frac} does.
+There is also \mintinline{tex}{\nicefrac} from \mintinline{tex}{nicefrac} package.
+Outline behavior:
+\begin{minted}{tex}
+  \[\dfrac{1+\dfrac{4}{2}}{6}=0,5\]
+  \[\frac{1+\frac{4}{2}}{6}=0,5\]
+  \[\nicefrac{4}{2}=2\]
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{align*}
+    \dfrac{1+\dfrac{4}{2}}{6} & =0,5 & \frac{1+\frac{4}{2}}{6} & =0,5 & \nicefrac{4}{2} & =2
+  \end{align*}
+\end{mdframed}
+Inline behavior:
+\begin{minted}{tex}
+  Some text $\dfrac{1+\dfrac{4}{2}}{6}$, more text $\frac{1+\frac{4}{2}}{6}$ and more $\nicefrac{4}{2}=2$.
+\end{minted}
+\begin{mdframed}[style=example]
+  Some text $\dfrac{1+\dfrac{4}{2}}{6}$, more text $\frac{1+\frac{4}{2}}{6}$ and more $\nicefrac{4}{2}=2$.
+\end{mdframed}
 
-\subsection{Дроби: изменяющие и неизменяющие размер}
-
-
-\begin{align*}
-    \frac{1+\dfrac{4}{2}}{6} = 0,5
-     &  &
-    \frac{1+\frac{4}{2}}{6} = 0,5
-\end{align*}
-
-\subsection{Длинные формулы}
-\begin{multline}
+\subsection{Lengthy formulas}
+\begin{minted}{tex}
+  \begin{multline}
     1+2+3+4+5+6+7+\dots + \\
     + 50+51+52+53+54+55+56+57 + \dots + \\
     + 96+97+98+99+100=5050
-\end{multline}
+  \end{multline}
+\end{minted}
+\begin{mdframed}[style=example]
+  \begin{multline}
+    1+2+3+4+5+6+7+\dots + \\
+    + 50+51+52+53+54+55+56+57 + \dots + \\
+    + 96+97+98+99+100=5050
+  \end{multline}
+\end{mdframed}
 
-\subsection{Системы уравнений и матрицы}
+\subsection{Parenthesis, braces, brackets}
+\begin{multicols}{2}
+  \begin{minted}{tex}
+    \left(\frac{x}{y}\right)
+    \left[\frac{x}{y}\right]
+    \left\{\frac{x}{y}\right\}
+    \left<\frac{x}{y}\right>
+  \end{minted}
+  \newcolumn
+  \begin{minted}[frame=none]{tex}
+    \qty(\frac{x}{y})
+    \qty[\frac{x}{y}]
+    \qty{\frac{x}{y}}
+    \aqty{\frac{x}{y}}
+  \end{minted}
+\end{multicols}
+\begin{mdframed}[style=example]
+  \begin{align*}
+    \left(\frac{x}{y}\right)   &  &
+    \left[\frac{x}{y}\right]   &  &
+    \left\{\frac{x}{y}\right\} &  &
+    \left<\frac{x}{y}\right>   &  &
+    \qty(\frac{x}{y})          &  &
+    \qty[\frac{x}{y}]          &  &
+    \qty{\frac{x}{y}}          &  &
+    \aqty{\frac{x}{y}}
+  \end{align*}
+\end{mdframed}
 
-\begin{align*}
+\begin{multicols}{2}
+  \begin{minted}{tex}
+    \left(\frac{x}{y}\right.
+    \left[\frac{x}{y}\right.
+    \left\{\frac{x}{y}\right.
+    \left<\frac{x}{y}\right.
+  \end{minted}
+  \newcolumn
+  \begin{minted}[frame=none]{tex}
+    \left.\frac{x}{y}\right)
+    \left.\frac{x}{y}\right]
+    \left.\frac{x}{y}\right\}
+    \left.\frac{x}{y}\right>
+  \end{minted}
+\end{multicols}
+\begin{mdframed}[style=example]
+  \begin{align*}
+    \left(\frac{x}{y}\right.  &  &
+    \left[\frac{x}{y}\right.  &  &
+    \left\{\frac{x}{y}\right. &  &
+    \left<\frac{x}{y}\right.  &  &
+    \left.\frac{x}{y}\right)  &  &
+    \left.\frac{x}{y}\right]  &  &
+    \left.\frac{x}{y}\right\} &  &
+    \left.\frac{x}{y}\right>
+  \end{align*}
+\end{mdframed}
+
+\begin{multicols}{2}
+  \begin{minted}{tex}
     \left\{
     \begin{aligned}
-        1\times x & = 1 \\
-        2\times y & = 4 \\
-        3\times z & = 9 \\
+      1\times x & = 1 \\
+      2\times y & = 4 \\
+      3\times z & = 9 \\
+    \end{aligned}
+    \right.
+  \end{minted}
+  \newcolumn
+  \begin{minted}[frame=none]{tex}
+    |x|=
+    \begin{cases}
+      x,  & \text{if }  x \ge 0 \\
+      -x, & \text{if } x<0
+    \end{cases}
+  \end{minted}
+\end{multicols}
+
+\begin{mdframed}[style=example]
+  \begin{align*}
+    \left\{
+    \begin{aligned}
+      1\times x & = 1 \\
+      2\times y & = 4 \\
+      3\times z & = 9 \\
     \end{aligned}
     \right.
      &  &
     |x|=
     \begin{cases}
-        x,  & \text{если }  x \ge 0 \\
-        -x, & \text{если } x<0
+      x,  & \text{if }  x \ge 0 \\
+      -x, & \text{if } x<0
     \end{cases}
-\end{align*}
+  \end{align*}
+\end{mdframed}
 
-\begin{align*}
+\subsection{Matrices}
+\begin{multicols}{3}
+  \begin{minted}{tex}
     \begin{pmatrix}
-        a_{11} & a_{12} & a_{13} \\
-        a_{21} & a_{22} & a_{23}
+      \xmat*{a}{3}{3}
+    \end{pmatrix}
+  \end{minted}
+  \columnbreak
+  \begin{minted}[frame=none]{tex}
+    \begin{vmatrix}
+      \xmat*{a}{3}{3}
+    \end{vmatrix}
+  \end{minted}
+  \columnbreak
+  \begin{minted}[frame=none]{tex}
+    \begin{bmatrix}
+      \xmat*{a}{3}{3}
+    \end{bmatrix}
+  \end{minted}
+\end{multicols}
+
+\begin{mdframed}[style=example]
+  \begin{align*}
+    \begin{pmatrix}
+      \xmat*{a}{3}{3}
     \end{pmatrix}
      &  &
     \begin{vmatrix}
-        a_{11} & a_{12} & a_{13} \\
-        a_{21} & a_{22} & a_{23}
+      \xmat*{a}{3}{3}
     \end{vmatrix}
      &  &
     \begin{bmatrix}
-        a_{11} & a_{12} & a_{13} \\
-        a_{21} & a_{22} & a_{23}
+      \xmat*{a}{3}{3}
     \end{bmatrix}
-\end{align*}
+  \end{align*}
+\end{mdframed}
 
-\section{Картинки}
+There is much more to matrices, vectors, derivatives and other common things in \mintinline{tex}{physics} package, see \href{https://ctan.org/pkg/physics}{its documentation}.
 
-\begin{align*}
-    \includegraphics[scale=0.45]{logo}
-     &  &
-    \includegraphics[draft,width=\textwidth,height=3cm,keepaspectratio]{logo}
-\end{align*}
-\begin{figure}[h]
-    \includegraphics[width=\textwidth]{drawio_example.pdf}
-\end{figure}
-\begin{center}
-    \adjustimage{max width=\textwidth/3, trim={{.25\width} {.25\height} {.25\width} {.25\height}},clip}{geogebra_example.pdf}
-\end{center}
-Картинки можно масштабировать и обрезать с помощью команды \verb|\adjustimage| из пакета \verb|adjustbox|.
-Кроме того, необязательно хранить картинки в бинарном формате.
-Исходный \LaTeX\:код можно прекомпилировать с помощью команды:
-\begin{minted}{tex}
-    \immediate\write18{pdflatex -aux-directory build/logs -output-directory build/images images/picture_source.tex}
-\end{minted}
-Или использовать latexmk:
-\begin{minted}{perl}
-    push @default_files, 'images/picture_source.tex';
-\end{minted}
-
-После чего, использовать выходной файл в обычной команде импортирующей картинки.
-Если в редакторе недоступны команды \verb|\immediate\write18|, то картинки нужно скомпилировать вручную по одной.
-После чего положить их в папку build/images.
-
-В десктопной версии программы GeoGebra доступен экспорт в \LaTeX\: код, использующий пакет \verb|tikz|.
-Экспортируемый код использует абсолютные величины для размеров шрифта и фигур.
-При этом, абсолютный размер полотна может не соответствовать реальному размеру картинки.
-Поэтому, чтобы картинка скомпилировалась корректно, при экспортировании нужно с помощью подстройки параметров X Unis и Y Units подобрать желаемый размер полотна.
-Этот размер полотна необходимо добавить в сгенерированный код после команды \verb|\documentclass|:
-\begin{minted}{tex}
-    \documentclass[10pt]{article}
-    \usepackage[margin=0in,paperwidth=23cm,paperheight=15cm]{geometry}
-\end{minted}
-Также, GeoGebra может использовать устаревший синтаксис для отрисовки окружностей
-(см. https://tex.stackexchange.com/questions/524076/problems-with-pgfplotsset).
-
-В vim можно быстро сделать замену с помощью команды
-\begin{minted}{vim}
-    :%s/circle (\(\%(\d\|\.\)\+\w\+\))/circle [radius=\1]/g
-\end{minted}
-
-\section{Таблицы}
-
-% Полноразмерные формулы в таблице задаются с помощью конструкции
-% $\displaystyle ...$
-% Чтобы формула не касалась границы снизу вручную задается минимальная высота строки после переноса "\\"
-% Чтобы формула не касалась границы сверху изменяется параметр \extrarowheight
-\setlength{\extrarowheight}{5mm}
-\begin{tabular}{|cp{4cm}|} % center, right, left
-    \hline
-    Это предложение из многих слов. &
-    Это предложение из многих слов.
-    \\
-    \hline
-    $\displaystyle \frac{x}{y}$     &
-    $\displaystyle \frac{x}{y}$
-    \\[5mm] %<-задание минимальной высоты вручную
-    \hline
-\end{tabular}
-\setlength{\extrarowheight}{0mm}
-\\
-
-% Другая команда для таблиц
-% Имеет дополнительный модификатор выравнивания X
-\begin{tabularx}{\textwidth}{|X|c|X|}
-    \hline
-    Это очень-очень длинное предложение из многих слов &
-    Текст покороче                                     &
-    Это очень-очень длинное предложение из многих слов Это очень-очень длинное предложение из многих слов
-    \\ \hline
-\end{tabularx}
-\\
-
-% Этот вариант подбирает ширину столбцов таким образом, чтобы их высота была одинаковой
-% Модификаторы выравнивания пишутся с заглавной буквы. J = Justify
-\begin{tabulary}{\textwidth}{|C|J|R|}
-    \hline
-    Это очень-очень длинное предложение из многих слов &
-    Текст покороче &
-    Это очень-очень длинное предложение из многих слов Это очень-очень длинное предложение из многих слов
-    \\ \hline
-\end{tabulary}
-
-
-% Окружение \begin{table} подбирает расположение таблицы "наилучшим" образом
-% В необязательном аргументе можно указать модификатор h (here), рекомендуя LaTeX расположить таблицу там же где и ссылка на нее.
-% Если добавить "!", то рекомендация будет более жесткой, возможно LaTeX нарушит некоторые ограничения
-\begin{table}[!h]
-    \begin{center}
-        \caption[Заголовок, который будет в списке таблиц]{Заголовок таблицы}\label{tab:1}
-        \begin{tabular}{|c|c|c|c|}
-            \hline
-            0,576745371 & 0,435853468 & 0,36384912  & 0,299047979 \\
-            0,064795364 & 0,028454613 & 0,751312059 & 0,693972684 \\
-            \hline
-        \end{tabular}
-    \end{center}
-    %\caption{Заголовок мог быть и здесь}
-\end{table}
-
-
-\begin{longtable}{|c|c|c|c|}
-    \caption[Заголовок большой таблицы, который будет в списке таблиц]{Заголовок большой таблицы}
-    \\ \hline
-    \textbf{RND1} & \textbf{RND2} & \textbf{RND3} & \textbf{RND4} \\ \hline
-    \endfirsthead
-    \hline
-    RND1          & RND2          & RND3          & RND4          \\ \hline
-    \endhead
-    \hline
-    \multicolumn{4}{r}{продолжение следует\ldots} \
-    \endfoot
-    \hline
-    \endlastfoot
-    0,576745371   & 0,435853468   & 0,36384912    & 0,299047979   \\
-    0,064795364   & 0,028454613   & 0,751312059   & 0,693972684   \\
-    0,263563971   & 0,367508634   & 0,075536384   & 0,337780707   \\
-    0,957583964   & 0,431948588   & 0,938522377   & 0,464307785   \\
-    0,815740484   & 0,123129806   & 0,883432767   & 0,760983283   \\
-    0,445062335   & 0,157424268   & 0,883442259   & 0,300596338   \\
-    0,187159669   & 0,728663343   & 0,637199982   & 0,765684528   \\
-    0,41009848    & 0,457031472   & 0,142858106   & 0,602946607   \\
-    0,43315663    & 0,26058316    & 0,611667007   & 0,400328185   \\
-    0,824086963   & 0,27304335    & 0,244565296   & 0,219675484   \\
-    0,109578811   & 0,278478018   & 0,242519359   & 0,414669471   \\
-    0,220778432   & 0,938106645   & 0,502630894   & 0,910760406   \\
-    0,957583964   & 0,431948588   & 0,938522377   & 0,464307785   \\
-    0,815740484   & 0,123129806   & 0,883432767   & 0,760983283   \\
-    0,445062335   & 0,157424268   & 0,883442259   & 0,300596338   \\
-    0,187159669   & 0,728663343   & 0,637199982   & 0,765684528   \\
-    0,41009848    & 0,457031472   & 0,142858106   & 0,602946607   \\
-    0,43315663    & 0,26058316    & 0,611667007   & 0,400328185   \\
-    0,824086963   & 0,27304335    & 0,244565296   & 0,219675484   \\
-    0,109578811   & 0,278478018   & 0,242519359   & 0,414669471   \\
-    0,220778432   & 0,938106645   & 0,502630894   & 0,910760406   \\
-\end{longtable}
-
-\section{Плавающие объекты}
-
-\begin{wrapfigure}{l}{0.3333\linewidth}
-    \includegraphics[width=\linewidth]{logo}
-    \caption{Картинка с обтеканием}
-\end{wrapfigure}
-
-Существует несколько эволюционных теорий, объясняющих механизмы, лежащие в основе эволюционных процессов.
-В данный момент наиболее общепринятой является синтетическая теория эволюции (СТЭ), являющаяся синтезом классического дарвинизма и популяционной генетики.
-СТЭ позволяет объяснить связь материала эволюции (генетические мутации) и механизма эволюции (естественный отбор).
-В рамках СТЭ эволюция определяется как процесс изменения частот аллелей генов в популяциях организмов в течение времени, превышающего продолжительность жизни одного поколения.
-
-Смотри таблицу \ref{tab:2}
-
-\begin{wraptable}{r}{0.5\linewidth}
-    \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        Год  & $P_x$ & $Q_x$ & $P_y$ & $Q_y$ & $n$   \\ \hline
-        2008 &       & 36    &       & 32    & —     \\ \hline
-        2009 & 30    & 30    & 22    & 50    & 25 \% \\ \hline
-        2010 & 36    & 30    & 22    &       & 20 \% \\ \hline
-        2011 & 33    & 40    & 24    & 45    &       \\ \hline
-    \end{tabular}
-    \caption{Обтекаемая таблица}\label{tab:2}
-\end{wraptable}
-
-Чарлз Дарвин первым сформулировал теорию эволюции путём естественного отбора.
-Эволюция путём естественного отбора — это процесс, который следует из трёх фактов о популяциях:
-1) рождается больше потомства, чем может выжить;
-2) у разных организмов разные черты, что приводит к различиям в выживаемости и вероятности оставить потомство;
-3) эти черты — наследуемые.
-Эти условия приводят к появлению внутривидовой конкуренции и избирательной элиминации наименее приспособленных к среде особей, что ведёт к увеличению в следующем поколении доли особей, черты которых способствуют выживанию и размножению в этой среде.
-Естественный отбор — единственная известная причина адаптаций, но не единственная причина эволюции.
-К числу неадаптивных причин относятся генетический дрейф, поток генов и мутации.
-
-Предположение о том, что живые организмы могут изменяться, впервые встречается у греческих философов-досократиков.
-Представитель милетской школы Анаксимандр считал, что все животные произошли из воды, после чего вышли на сушу.
-Человек, по его представлениям, зародился в теле рыбы.
-У Эмпедокла можно найти идеи гомологии и выживания наиболее приспособленных.
-Демокрит считал, что наземные животные произошли от земноводных, а те в свою очередь самозародились в илу.
-
-\section{Счетчики}
-
-% Необязательный аргумент указывает на подчинение
-\newcounter{customcounter}[section]
-\setcounter{customcounter}{2}
-\addtocounter{customcounter}{1}
-\arabic{customcounter}
-\roman{customcounter}
-\Roman{customcounter}
-\alph{customcounter}
-\Alph{customcounter}
-\Asbuk{customcounter}
-\fnsymbol{customcounter}
-
-% Переопределение нумерации разделов
-\renewcommand{\thesection}{\Asbuk{section}}
-\renewcommand{\thesection}{\arabic{section}}
-
-\section{Перечни}
-% Переопределение нумерации перечней
-\renewcommand{\theenumi}{\roman{enumi}}
-
-\begin{itemize}
-    \item[*] Первый пункт
-    \item Второй пункт
-    \item
-          \begin{itemize}
-              \item Первый пункт вложенного списка
-              \item Второй пункт вложенного списка
-                    \begin{enumerate}
-                        \item Первый пункт нумерованного списка
-                    \end{enumerate}
-          \end{itemize}
-\end{itemize}
-
-\section{Теоремы}
-
-\begin{theorem}[Простое равенство]\label{th:1}
-    $2+2=4$
-\end{theorem}
-
-\begin{proposition}
-    $2+2=4$
-\end{proposition}
-
-\begin{corollary}
-    $2+2=4$
-\end{corollary}
-
-\begin{problem}
-$2+2$
-\end{problem}
-
-\begin{solution}
-    $2+2=4$
-\end{solution}
-
-Если после названия теоремы сразу идет список, то он будет отображаться некорректно.
+\subsection{Theorems}
+For typesetting math text there are several useful environments, such as \mintinline{tex}{theorem} \autocite{Overleaf-theorems-2018}.
+There is a caveat when using lists just at the beginning of these environments: lists should be escaped with \mintinline{tex}{\leavevmode} command.
 \begin{minted}{tex}
   \begin{theorem}
+    \leavevmode\vspace{-1.4em}
     \begin{enumerate}
       \item
       \item
     \end{enumerate}
   \end{theorem}
-\end{minted}
-\begin{theorem}
-  \begin{enumerate}
-    \item
-    \item
-  \end{enumerate}
-\end{theorem}
 
-Чтобы этого избежать нужно использовать \mintinline{tex}{\leavevmode} для доказательств (\mintinline{tex}{proof}) и \mintinline{tex}{\leavevmode\vspace{-1.4em}} для всего остального:
-\begin{minted}{tex}
+  \begin{proof}
+    \leavevmode
+    \begin{enumerate}
+      \item
+      \item
+    \end{enumerate}
+  \end{proof}
+\end{minted}
+\begin{mdframed}[style=example]
   \begin{theorem}
     \leavevmode\vspace{-1.4em}
     \begin{enumerate}
@@ -443,201 +544,146 @@ $2+2$
       \item
     \end{enumerate}
   \end{proof}
-\end{minted}
-\begin{theorem}
-  \leavevmode\vspace{-1.4em}
-  \begin{enumerate}
-    \item
-    \item
-  \end{enumerate}
-\end{theorem}
-\begin{proof}
-  \leavevmode
-  \begin{enumerate}
-    \item
-    \item
-  \end{enumerate}
-\end{proof}
+\end{mdframed}
 
-\section{Гиперссылки}
-
-Caйт МФТИ \url{https://mipt.ru/}
-
-\href{https://mipt.ru/}{Сайт МФТИ}
-
-\section{Пакет babel и правила русской типографики}
-\subsection{Дефисы}
-N dash - Не используется в русской типографике:\\
---
-
-M dash - Стандартное тире\\
----
-
-Тире для отсутствующего члена предложения\\
-Москва "--- столица РФ.
-
-"--* Прямая речь
-
-\subsection{Пробелы}
-
-В русском наборе принято:
+\section{Units and time}
+Units are generally typesetted with \mintinline{tex}{siunitx} package:
 \begin{itemize}
-    \item единицы измерения, знак процента отделять пробелами от числа: 10~кВт, 15~\%;
-    \item $\tg 20^\circ$, но: 20~${}^\circ$С;
-    \item знак номера, параграфа отделять от числа: №~5, \S~8;
-    \item стандартные сокращения: т.\:е., и~т.\:д., и~т.\:п.;
-    \item неразрывные пробелы в~предложениях.
+  \item Just unit: \mintinline{tex}{\si{\milli\meter\per\second}} --- \si{\milli\meter\per\second}.
+  \item Unit with value: \mintinline{tex}{\SI{1e4}{\candela}} --- \SI{1e4}{\candela}.
+  \item Values list: \mintinline{tex}{\SIlist{1;2;3}{\meter}} --- \SIlist{1;2;3}{\meter}.
+  \item Numbers list: \mintinline{tex}{\numlist{1;2;3} participants} --- \numlist{1;2;3} participants.
+  \item Angles: \mintinline{tex}{\ang{90}} --- \ang{90}.
 \end{itemize}
 
-\selectlanguage{english}
-\href{https://www.semipol.de/posts/2018/06/latex-best-practices-lessons-learned-from-writing-a-phd-thesis/}{From best practices:}
+Dates can be formatted with \mintinline{tex}{\DTMDate} command from \mintinline{tex}{datetime2} package, for example \mintinline{tex}{\DTMDate{2000-01-01}}:
+\begin{mdframed}[style=example]
+  \DTMDate{2020-01-01}
+\end{mdframed}
 
-LaTeX distinguishes between different types of spaces.
-Generally, a space is treated as an inter-word space as long as the character before the space is not a period.
-A period is thus interpreted as the end of a sentence and the following space is assumed to be an inter-sentence space.
-Thus, if you use an abbreviation with a period at the end, you have instructed LaTeX that this period does not end the current sentence by escaping the following space:
+\section{Code listings}
+Code can be included in several ways:
+\begin{itemize}
+  \item Inline with \mintinline{tex}{\mintinline} command from \mintinline{tex}{minted} package and \mintinline{tex}{\verb} command from \mintinline{tex}{verbatim} package for some \LaTeX{} corner cases.
+  \item Outline with \mintinline{tex}{minted} environment.
+  \item Outline with loading code from file with \mintinline{tex}{inputminted} command.
+\end{itemize}
 \begin{minted}{tex}
-    This is a sentence w.\ a forced inter-word space.
+  \inputminted{c++}{assets/cpp_example.cpp}
 \end{minted}
-This is a sentence w.\ a forced inter-word space.
+\begin{mdframed}[style=example]
+  \inputminted{c++}{assets/cpp_example.cpp}
+\end{mdframed}
 
-If you don’t do this, you randomly get larger spaces after abbreviations that interrupt the visual flow.
-One exception to this rule is if the period is preceded by a capital letter.
-In this case, LaTeX assumes an abbreviation and continues to use an inter-word space.
-You can reverse this behavior by placing an \\@ before the period.
+\section{Citations, quotations and hyperlinks}
+\subsection{Hyperlinks}
+Hyperlinks are typesetted with \mintinline{tex}{hyperref} package.
 \begin{minted}{tex}
-    This is done by XYZ\@. This is a new sentence.
+  Just URL: \url{https://mipt.ru/}.
+  Or link: \href{https://mipt.ru/}{MIPT website}.
 \end{minted}
-This is done by XYZ\@. This is a new sentence.
+\begin{mdframed}[style=example]
+  Just URL: \url{https://mipt.ru/}.
+  Or link: \href{https://mipt.ru/}{MIPT website}.
+\end{mdframed}
 
-If you are using common abbreviations in English, \eg{} this one, \ie{} exempli gratia, you can use the foreign package to get commands that handle the spacing correctly:
-
+\subsection{Quotations}
+Regular quotation without reference can be done with \mintinline{tex}{\textquote} command from \mintinline{tex}{csquotes} package or standard \mintinline{tex}{quote} and \mintinline{tex}{quotation} environments:
 \begin{minted}{tex}
-    This is an example, \eg{} spacing is right here.
+  \textquote{This is the quoted text}
+  \begin{quotation}
+    This is the quoted text
+  \end{quotation}
 \end{minted}
-This is an example, \eg{} spacing is right here.
+\begin{mdframed}[style=example]
+  \textquote{This is the quoted text}
+  \begin{quotation}
+    This is the quoted text
+  \end{quotation}
+\end{mdframed}
 
-
-
-
-\subsection{Пакет siunitx}
-\begin{tabular}{r}
-    \SI{5}{\meter\per\second}\\
-    $R$ \si{\meter\per\second}\\
-    R \si{\meter\per\second}\\
-\end{tabular}
-
-We measure in \si{\kilogram\metre\per\second}.
-The brightness was \SI{.23e7}{\candela}.
-The experiment resulted in \SIlist{0.13;0.67;0.80}{\milli\metre}.
-We need \numlist{10;30;50;70} participants.
-The angle was \ang{12.3}.
-
-\subsection{Time}
-Date formatting \DTMDate{2022-01-03}.
-
-
-
-\section{Математические шрифты}
-
-mathcal font: $\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$\\
-mathscr font: $\mathscr{ABCDEFGHIJKLMNOPQRSTUVWXYZ}$
-
-\section{Код на C++}
-\inputminted{c++}{assets/cpp_example.cpp}
-
-\section{Код на \LaTeX}
+Quotation with an optional page number, optional automatic typesetting of dot and optional censoring:
 \begin{minted}{tex}
-    \begin{tabular}{r}
-        \SI{5}{\meter\per\second}\\
-        $R$ \si{\meter\per\second}\\
-        R \si{\meter\per\second}\\
-    \end{tabular}
+  \textcquote[1]{Overleaf-citations-2018}[.]{Biblatex provides numerous citation styles but \textelp{unsignificant details}}
 \end{minted}
+\begin{mdframed}[style=example]
+  \textcquote[1]{Overleaf-citations-2018}[.]{Biblatex provides numerous citation styles but \textelp{unsignificant details}}
+\end{mdframed}
 
-\section{Цитаты}
-\blockquote[{\autocite{Tasnadi2006}}]{Some interesting quote.}
+\subsection{Citations}
+Citations (or referencing) can be done with \mintinline{tex}{\autocite} command.
+It is also possible to reference with a specific part of \mintinline{tex}{biblatex} entry with \mintinline{tex}{\citeauthor}, \mintinline{tex}{\citetitle}, \mintinline{tex}{\citeurl}, \mintinline{tex}{\citeyear} or \mintinline{tex}{\citedate}.
+See more at \href{https://ctan.org/pkg/biblatex}{\mintinline{tex}{biblatex} package documentation}.
+Also, check out \href{https://boberle.com/projects/bibtex-entry-generator/online/}{a tool for generating \mintinline{tex}{biblatex} entries}.
 
-\blockquote[{\autocite{Spengler2012}}]{Another interesting quote.}
-
-\blockquote[{\autocite{TheMendeleySupportTeam2011}}]{Third interesting quote.}
-
-\subsection{Кавычки}
-<<Елочки и ,,лапки``>>
-
-\href{https://www.semipol.de/posts/2018/06/latex-best-practices-lessons-learned-from-writing-a-phd-thesis/}{From best practices:}
-If you want to avoid remembering how each language and publisher style handles quotation marks, simply use the csquotes package, which automatically selects the correct way for the current document language:
+\section{Counters}
+Create counter:
 \begin{minted}{tex}
-    \textquote{this is the quoted text}
+  \newcounter{<counter_name>}[<parent_counter>]
 \end{minted}
-\textquote{this is the quoted text}
-
-If the quotation is actually from another publication that has to be cited, you can use the following shortcut to also get the correct citation through BibLaTeX:
+Change value:
 \begin{minted}{tex}
-    % 42 is the pagenumber
-    \textcquote[42]{Spengler2012}{this is the quoted text}
+  \setcounter{<counter_name>}{<value>}
+  \addtocounter{<counter_name>}{<value>}
 \end{minted}
-\textcquote[42]{Spengler2012}{this is the quoted text}
-
-If your quotation is a sentence that ends with a period, some languages have different rules whether to include the period in the quotation marks or not.
-csquotes can handle these cases automatically (and with configuration options), but you have to indicate the final period manually:
+Show counter:
 \begin{minted}{tex}
-    \textcquote[42]{Spengler2012}[.]{This is a full sentence with period}
+  \arabic{<counter_name>}
+  \roman{<counter_name>}
+  \Roman{<counter_name>}
+  \alph{<counter_name>}
+  \Alph{<counter_name>}
+  \Asbuk{<counter_name>}
+  \fnsymbol{<counter_name>}
 \end{minted}
-\textcquote[42]{Spengler2012}[.]{This is a full sentence with period}
 
-Finally, it is common to strip some parts of quoted material or add annotations to make it understandable in the current context.
-csquotes provides command for these purposes so that you do not have to remember the exact rules in each language.
-For instance, to replace some fraction with a summary you can use:
+\newcounter{customcounter}[section]
+\setcounter{customcounter}{1}
+\begin{mdframed}[style=example]
+  \arabic{customcounter}
+  \roman{customcounter}
+  \Roman{customcounter}
+  \alph{customcounter}
+  \Alph{customcounter}
+  \Asbuk{customcounter}
+  \fnsymbol{customcounter}
+\end{mdframed}
+
+Change sections or lists numeration style:
 \begin{minted}{tex}
-    \textcquote[42]{Spengler2012}[.]{This is \textelp{garbage} with  period}
+  \renewcommand{\thesection}{\arabic{section}}
+  \renewcommand{\theenumi}{\arabic{enumi}}
 \end{minted}
-\textcquote[42]{Spengler2012}[.]{This is \textelp{garbage} with  period}
 
+\section{Commands, environments and logical operations}
+Generic new commands and environments can be created with \mintinline[breakbefore=DC]{tex}{\NewDocumentCommand} and \mintinline[breakbefore=DE]{tex}{\NewDocumentEnvironment} commands from \mintinline{tex}{xparse} package.
+Refer to \href{https://ctan.org/pkg/xparse}{its documentation} for details.
 
+Logical operations are useful for creating different versions of the same document, for example with and without solutions.
+Create bool and set it to true:
+\begin{minted}{tex}
+  \newbool{custombool}
+  \booltrue{custombool}
+  \ifbool{custombool}{True branch}{False branch}
+\end{minted}
+This can be combined with environment variables, for example
+\begin{minted}{tex}
+  \getenv[\SHLVL]{SHLVL}
+  \ifdefstring{\SHLVL}{0}{SHLVL is zero}{SHLVL is not zero}
+\end{minted}
+\getenv[\SHLVL]{SHLVL}
+\begin{mdframed}[style=example]
+  \ifdefstring{\SHLVL}{0}{true}{false}
+\end{mdframed}
 
+Refer to \href{https://ctan.org/pkg/etoolbox}{\mintinline{tex}{etoolbox} package documentation} for details.
 
-
-
-
-
-
-\section{Объявление новых команд и окружений}
-% Простое объявление
-\newcommand{\nw}{\ensuremath{\succcurlyeq}}
-
-% newcommand позволяет не более 9 обязательных аргументов
-% и 1 необязательный, причем необязательный аргумент всегда идет первым
-% Число всех аргументов указывается в первых "[]"
-% Для указания наличия необязательного агрумента добавляются вторые "[]",
-% в которых указывается значение по умолчанию, возможно пустое
-% Символы % для того чтобы перенос строки не считался частью команды
-\newcommand{\customcommand}[2][X]{
-    $#1 + #2$
-}
-
-\customcommand{Y}
-\customcommand[Z]{Y}
-
-% \renewcommand работает также, но для уже определенных команд
-
-% Окружение отличается от команды, в основном, тем, что
-% имеет завершающую последовательность
-\newenvironment{customenv}[1]{
-    \addtocounter{customcounter}{1}%
-    Номер \thesection.\arabic{customcounter}. <<#1>> %
-}%
-{\vspace{0cm}} % code ending the environment
-
-\begin{customenv}{Свое окружение}
-    Текст внутри окружения.
-\end{customenv}
-
-\section{Пакет etoolbox}
-
-\newbool{custombool}
-\booltrue{custombool}
-\ifbool{custombool}{Правда}{Ложь}
+Show list of figures, tables an bibliography:
+\begin{minted}{tex}
+  \listoffigures
+  \listoftables
+  \printbibliography
+\end{minted}
 
 \listoffigures
 
