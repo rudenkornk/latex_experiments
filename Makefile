@@ -21,16 +21,6 @@ TEX_DEPS := $(shell find -maxdepth 1 -type f,l -name \*.tex)
 BIB_DEPS := $(shell find -maxdepth 1 -type f,l -name \*.bib)
 MAIN_DEPS := $(TEX_DEPS) $(BIB_DEPS) $(ASSETS_DEPS) $(TEX_IMAGES) $(DRAWIO_IMAGES)
 
-KEEP_CI_USER_SUDO ?= false
-KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
-DOCKER_TARGET ?=
-DOCKER_TARGET := $(DOCKER_TARGET)
-DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.0
-DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
-DOCKER_CONTAINER_NAME ?= $(PROJECT_NAME)_container
-DOCKER_CONTAINER_NAME := $(DOCKER_CONTAINER_NAME)
-DOCKER_CONTAINER := $(BUILD_DIR)/$(DOCKER_CONTAINER_NAME)
-
 .PHONY: main
 main: $(BUILD_DIR)/$(MAIN).pdf
 
@@ -81,6 +71,16 @@ clean:
 
 
 ###################### docker support ######################
+KEEP_CI_USER_SUDO ?= false
+KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
+DOCKER_TARGET ?=
+DOCKER_TARGET := $(DOCKER_TARGET)
+DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.0
+DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
+DOCKER_CONTAINER_NAME ?= $(PROJECT_NAME)_container
+DOCKER_CONTAINER_NAME := $(DOCKER_CONTAINER_NAME)
+DOCKER_CONTAINER := $(BUILD_DIR)/$(DOCKER_CONTAINER_NAME)
+
 DOCKER_CONTAINER_ID = $(shell command -v docker &> /dev/null && docker container ls --quiet --all --filter name=^/$(DOCKER_CONTAINER_NAME)$)
 DOCKER_CONTAINER_STATE = $(shell command -v docker &> /dev/null && docker container ls --format {{.State}} --all --filter name=^/$(DOCKER_CONTAINER_NAME)$)
 DOCKER_CONTAINER_RUN_STATUS = $(shell [[ "$(DOCKER_CONTAINER_STATE)" != "running" ]] && echo "$(DOCKER_CONTAINER)_not_running")
