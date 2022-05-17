@@ -6,17 +6,17 @@ A simple template for LaTeX projects
 
 ## Build
 ### Option 1: Use docker container with all required packages installed:
-```shell
+```bash
 DOCKER_TARGET=main make in_docker
 ```
 
 ### Option 2: config your system with provided scripts
 Config your system [using provided scripts from docker repo](https://github.com/rudenkornk/docker_latex#3-use-scripts-from-this-repository-to-setup-your-own-system) and run:
-```shell
+```bash
 make main
 ```
 
 ## Clean
-```shell
+```bash
 make clean
 ```
