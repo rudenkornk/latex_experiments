@@ -10,13 +10,15 @@ A simple template for LaTeX projects
 DOCKER_TARGET=main make in_docker
 ```
 
-### Option 2: config your system with provided scripts
-Config your system [using provided scripts from docker repo](https://github.com/rudenkornk/docker_latex#3-use-scripts-from-this-repository-to-setup-your-own-system) and run:
+### Option 2: Use docker container interactively:
 ```bash
+make latex_experiments_container
+docker attach latex_experiments_container
 make main
 ```
 
-## Clean
+### Option 3: config your system with provided scripts
+Config your system [using provided scripts from docker repo](https://github.com/rudenkornk/docker_latex#3-use-scripts-from-this-repository-to-setup-your-own-system) and run:
 ```bash
-make clean
+make main
 ```

@@ -101,6 +101,9 @@ endif
 	sleep 1
 	mkdir --parents $(BUILD_DIR) && touch $@
 
+.PHONY: $(DOCKER_CONTAINER_NAME)
+$(DOCKER_CONTAINER_NAME): $(DOCKER_CONTAINER)
+
 .PHONY: in_docker
 in_docker: $(DOCKER_CONTAINER)
 	docker exec \
