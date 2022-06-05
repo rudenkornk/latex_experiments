@@ -16,13 +16,13 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
     - name: Lint
       run: |
-        DOCKER_TARGET=lint make in_docker
+        make in_docker TARGET=lint
     - name: Build
       run: |
-        DOCKER_TARGET=main make in_docker
+        make in_docker TARGET=main
     - name: Check
       run: |
-        DOCKER_TARGET=check make in_docker
+        make in_docker TARGET=check
     - name: Clean
       run: |
         make clean
