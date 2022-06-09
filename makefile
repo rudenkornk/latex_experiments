@@ -71,10 +71,10 @@ clean:
 
 
 ###################### docker support ######################
+TARGET ?=
+COMMAND ?=
 KEEP_CI_USER_SUDO ?= false
 KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
-TARGET ?=
-TARGET := $(TARGET)
 DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.2
 DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
 DOCKER_CONTAINER_NAME ?= $(PROJECT_NAME)_container
@@ -108,7 +108,13 @@ $(DOCKER_CONTAINER_NAME): $(DOCKER_CONTAINER)
 
 .PHONY: in_docker
 in_docker: $(DOCKER_CONTAINER)
+ifneq ($(COMMAND),)
+	docker exec \
+		$(DOCKER_CONTAINER_NAME) \
+		bash -c "source ~/.profile && $(COMMAND)"
+else
 	docker exec \
 		$(DOCKER_CONTAINER_NAME) \
 		bash -c "source ~/.profile && make $(TARGET)"
+endif
 
