@@ -3,8 +3,6 @@ SHELL = /usr/bin/env bash
 PROJECT_NAME=latex_experiments
 BUILD_DIR := build
 ASSETS_DIR := assets
-DRAWIO_CMD ?= drawio
-DRAWIO_CMD := $(DRAWIO_CMD)
 BUILD_OPTIONS ?=
 BUILD_OPTIONS := $(BUILD_OPTIONS)
 MAIN := main
@@ -25,7 +23,7 @@ MAIN_DEPS := $(TEX_DEPS) $(BIB_DEPS) $(ASSETS_DEPS) $(TEX_IMAGES) $(DRAWIO_IMAGE
 main: $(BUILD_DIR)/$(MAIN).pdf
 
 $(DRAWIO_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.xml
-	$(DRAWIO_CMD) --transparent --crop --export --output $@ $< --no-sandbox
+	drawio --transparent --crop --export --output $@ $<
 
 .PHONY: $(TEX_IMAGES) # let latexmk decide whether to recompile the document
 $(TEX_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.tex
@@ -75,7 +73,7 @@ TARGET ?=
 COMMAND ?=
 KEEP_CI_USER_SUDO ?= false
 KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
-DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.2
+DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.4
 DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
 DOCKER_CONTAINER_NAME ?= $(PROJECT_NAME)_container
 DOCKER_CONTAINER_NAME := $(DOCKER_CONTAINER_NAME)
@@ -111,10 +109,10 @@ in_docker: $(DOCKER_CONTAINER)
 ifneq ($(COMMAND),)
 	docker exec \
 		$(DOCKER_CONTAINER_NAME) \
-		bash -c "source ~/.profile && $(COMMAND)"
+		bash -c "$(COMMAND)"
 else
 	docker exec \
 		$(DOCKER_CONTAINER_NAME) \
-		bash -c "source ~/.profile && make $(TARGET)"
+		bash -c "make $(TARGET)"
 endif
 
