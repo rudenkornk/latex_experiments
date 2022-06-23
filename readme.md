@@ -12,7 +12,7 @@ make in_docker TARGET=main
 
 ### Option 2: Use docker container interactively:
 ```bash
-make latex_experiments_container
+make container
 docker attach latex_experiments_container
 make main
 ```
