@@ -1,10 +1,8 @@
 SHELL = /usr/bin/env bash
 
-PROJECT_NAME=latex_experiments
+PROJECT_NAME := latex_experiments
 BUILD_DIR := build
 ASSETS_DIR := assets
-BUILD_OPTIONS ?=
-BUILD_OPTIONS := $(BUILD_OPTIONS)
 MAIN := main
 
 DRAWIO_IMAGES :=
@@ -27,13 +25,13 @@ $(DRAWIO_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.xml
 
 .PHONY: $(TEX_IMAGES) # let latexmk decide whether to recompile the document
 $(TEX_IMAGES): $(BUILD_DIR)/%.pdf: $(ASSETS_DIR)/%.tex
-	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $<
+	latexmk --output-directory=$(BUILD_DIR) $<
 	# latexmk may exit with false-positive success, thus double-check it with pdfinfo
 	pdfinfo $@ &> /dev/null
 
 .PHONY: $(BUILD_DIR)/$(MAIN).pdf # let latexmk decide whether to recompile the document
 $(BUILD_DIR)/$(MAIN).pdf: $(MAIN_DEPS)
-	latexmk --output-directory=$(BUILD_DIR) $(BUILD_OPTIONS) $(MAIN).tex
+	latexmk --output-directory=$(BUILD_DIR) $(MAIN).tex
 	# latexmk may exit with false-positive success, thus double-check it with pdfinfo
 	pdfinfo $@ &> /dev/null
 
@@ -72,11 +70,8 @@ clean:
 TARGET ?=
 COMMAND ?=
 KEEP_CI_USER_SUDO ?= false
-KEEP_CI_USER_SUDO := $(KEEP_CI_USER_SUDO)
-DOCKER_IMAGE_TAG ?= rudenkornk/docker_latex:1.0.4
-DOCKER_IMAGE_TAG := $(DOCKER_IMAGE_TAG)
-DOCKER_CONTAINER_NAME ?= $(PROJECT_NAME)_container
-DOCKER_CONTAINER_NAME := $(DOCKER_CONTAINER_NAME)
+DOCKER_IMAGE_TAG := rudenkornk/docker_latex:1.0.4
+DOCKER_CONTAINER_NAME := $(PROJECT_NAME)_container
 DOCKER_CONTAINER := $(BUILD_DIR)/$(DOCKER_CONTAINER_NAME)
 
 IF_DOCKERD_UP := command -v docker &> /dev/null && pidof dockerd &> /dev/null
@@ -91,7 +86,6 @@ ifneq ($(DOCKER_CONTAINER_ID),)
 endif
 	docker run --interactive --tty --detach \
 		--user ci_user \
-		--env BUILD_OPTIONS="$(BUILD_OPTIONS)" \
 		--env KEEP_CI_USER_SUDO="$(KEEP_CI_USER_SUDO)" \
 		--env CI_UID="$$(id --user)" --env CI_GID="$$(id --group)" \
 		--env "TERM=xterm-256color" \
