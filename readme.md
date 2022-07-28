@@ -5,12 +5,12 @@
 A simple template for LaTeX projects
 
 ## Build
-### Option 1: Use docker container with all required packages installed:
+### Option 1: Use docker container with all required packages installed
 ```bash
 make in_docker TARGET=main
 ```
 
-### Option 2: Use docker container interactively:
+### Option 2: Use docker container interactively
 ```bash
 make container
 docker attach latex_experiments_container
