@@ -70,7 +70,7 @@ clean:
 TARGET ?=
 COMMAND ?=
 KEEP_CI_USER_SUDO ?= false
-DOCKER_IMAGE_TAG := rudenkornk/docker_latex:1.0.4
+DOCKER_IMAGE_TAG := rudenkornk/docker_latex:1.1.0
 DOCKER_CONTAINER_NAME := $(PROJECT_NAME)_container
 DOCKER_CONTAINER := $(BUILD_DIR)/$(DOCKER_CONTAINER_NAME)
 DOCKER_COMMAND != [[ ! -z "$(COMMAND)" ]] && echo "$(COMMAND)" || echo "make $(TARGET)"
