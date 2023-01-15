@@ -62,7 +62,7 @@ jobs:
       with:
         tag: v${{ env.VERSION }}
     - name: "[RELEASE] Fail if tag is released"
-      if: env.IS_RELEASE == 'true'
+      if: env.WILL_BE_RELEASED == 'true'
       run: |
         [[ "${{ steps.check_released.outputs.exists }}" == "false" ]]
     - name: "[RELEASE] Create release"
