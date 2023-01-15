@@ -70,8 +70,8 @@
 \usepackage{wrapfig}
 \usepackage{epstopdf}
 \usepackage{adjustbox}
-\graphicspath{{assets/}{build/images/}{build/}}
-\epstopdfsetup{outdir=build/}
+\graphicspath{{assets/}{__build__/images/}{__build__/}}
+\epstopdfsetup{outdir=__build__/}
 
 % Graphics
 \usepackage{tikz}
@@ -81,7 +81,7 @@
 \usepackage{pgfplotstable}
 
 % Code highlighting
-\usepackage[outputdir=build,newfloat]{minted}
+\usepackage[outputdir=__build__,newfloat]{minted}
 \setminted[tex]{frame=leftline,breaklines}
 \setmintedinline{breaklines}
 

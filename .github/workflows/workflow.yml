@@ -1,37 +1,76 @@
-name: LaTeX workflow
+name: latex_experiments workflow
+
 on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "Should this run create a release."
+        required: false
+        type: boolean
   push:
     branches:
     - main
   pull_request:
     branches:
     - main
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: "ubuntu-20.04"
+  main:
+    runs-on: "ubuntu-22.04"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
     - name: Download and start container
-      run: |
-        make container
-    - name: Lint
-      run: |
-        make in_docker TARGET=lint
+      run: make container
     - name: Build
-      run: |
-        make in_docker TARGET=main
+      run: make in_container TARGET=build
     - name: Check
-      run: |
-        make in_docker TARGET=check
+      run: make in_container TARGET=check
     - name: Clean
+      run: make clean && make cclean
+    - name: "Set environment"
       run: |
-        make clean
-    - name: Upload a build artifact
-      uses: actions/upload-artifact@v3
+        if git log --format=%B -n 1 | grep "\[RELEASE\]" --quiet; then
+          COMMIT_MSG_HAS_RELEASE="true"
+          WILL_BE_RELEASED="true"
+        fi
+        if [[ "$COMMIT_MSG_HAS_RELEASE" == "true" && "${{ github.event_name }}" == "push" ]]; then
+          IS_RELEASE="true"
+        fi
+        if [[ "${{ github.event.inputs.release }}" == "true" ]]; then
+          IS_RELEASE="true"
+          WILL_BE_RELEASED="true"
+        fi
+        # shellcheck disable=SC2129
+        echo "IS_RELEASE=$IS_RELEASE" >> "$GITHUB_ENV"
+        echo "WILL_BE_RELEASED=$WILL_BE_RELEASED" >> "$GITHUB_ENV"
+        echo "VERSION=$(make --silent version)" >> "$GITHUB_ENV"
+    - name: "[RELEASE] Check if tag is already released"
+      if: env.WILL_BE_RELEASED == 'true'
+      uses: mukunku/tag-exists-action@v1.2.0
+      id: check_released
       with:
-        name: output
-        path: build/main.pdf
-
+        tag: v${{ env.VERSION }}
+    - name: "[RELEASE] Fail if tag is released"
+      if: env.IS_RELEASE == 'true'
+      run: |
+        [[ "${{ steps.check_released.outputs.exists }}" == "false" ]]
+    - name: "[RELEASE] Create release"
+      uses: marvinpinto/action-automatic-releases@v1.2.1
+      if: env.IS_RELEASE == 'true'
+      with:
+        repo_token: ${{ github.token }}
+        automatic_release_tag: v${{ env.VERSION }}
+        prerelease: false
+        title: Release ${{ env.VERSION }}
+        files: __build__/main.pdf
