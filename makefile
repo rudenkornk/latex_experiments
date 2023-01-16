@@ -51,6 +51,10 @@ $(BUILD_DIR)/fonts:
 version:
 	$(info $(VERSION))
 
+.PHONY: release_file
+release_file:
+	$(info $(BUILD_DIR)/$(ROOT_FILE).pdf)
+
 .PHONY: check
 check: $(BUILD_DIR)/$(ROOT_FILE).pdf
 	for i in \
@@ -72,7 +76,7 @@ clean:
 	rm --force $(BUILD_DIR)/*.lot
 	rm --force $(BUILD_DIR)/*.out
 	rm --force $(BUILD_DIR)/*.xml
-	rm --force logs
+	rm --force --recursive logs
 	rm --force --recursive $(BUILD_DIR)/_minted-main
 
 

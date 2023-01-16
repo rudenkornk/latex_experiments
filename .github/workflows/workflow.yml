@@ -55,6 +55,7 @@ jobs:
         echo "IS_RELEASE=$IS_RELEASE" >> "$GITHUB_ENV"
         echo "WILL_BE_RELEASED=$WILL_BE_RELEASED" >> "$GITHUB_ENV"
         echo "VERSION=$(make --silent version)" >> "$GITHUB_ENV"
+        echo "RELEASE_FILE=$(make --silent release_file)" >> "$GITHUB_ENV"
     - name: "[RELEASE] Check if tag is already released"
       if: env.WILL_BE_RELEASED == 'true'
       uses: mukunku/tag-exists-action@v1.2.0
@@ -72,5 +73,5 @@ jobs:
         repo_token: ${{ github.token }}
         automatic_release_tag: v${{ env.VERSION }}
         prerelease: false
-        title: Release ${{ env.VERSION }}
-        files: __build__/main.pdf
+        title: Release v${{ env.VERSION }}
+        files: ${{ env.RELEASE_FILE }}
