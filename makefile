@@ -72,6 +72,7 @@ clean:
 	rm --force $(BUILD_DIR)/*.lot
 	rm --force $(BUILD_DIR)/*.out
 	rm --force $(BUILD_DIR)/*.xml
+	rm --force logs
 	rm --force --recursive $(BUILD_DIR)/_minted-main
 
 
