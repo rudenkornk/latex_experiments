@@ -1,5 +1,6 @@
 **/build*
 __build__/
+logs/
 /.vscode
 vs.code-workspace
 __pycache__
