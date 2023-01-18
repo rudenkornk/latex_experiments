@@ -25,11 +25,53 @@ concurrency:
 jobs:
   main:
     runs-on: "ubuntu-22.04"
-    container: ghcr.io/rudenkornk/latex_image:2.0.0
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-    - name: Id
-      run: id
+    - name: Download and start container
+      run: make container
+    - name: Build
+      run: make in_container TARGET=build
+    - name: Check
+      run: make in_container TARGET=check
+    - name: Clean
+      run: make clean && make cclean
+    - name: "Set environment"
+      run: |
+        if git log --format=%B -n 1 | grep "\[RELEASE\]" --quiet; then
+          COMMIT_MSG_HAS_RELEASE="true"
+          WILL_BE_RELEASED="true"
+        fi
+        if [[ "$COMMIT_MSG_HAS_RELEASE" == "true" && "${{ github.event_name }}" == "push" ]]; then
+          IS_RELEASE="true"
+        fi
+        if [[ "${{ github.event.inputs.release }}" == "true" ]]; then
+          IS_RELEASE="true"
+          WILL_BE_RELEASED="true"
+        fi
+        # shellcheck disable=SC2129
+        echo "IS_RELEASE=$IS_RELEASE" >> "$GITHUB_ENV"
+        echo "WILL_BE_RELEASED=$WILL_BE_RELEASED" >> "$GITHUB_ENV"
+        echo "VERSION=$(make --silent version)" >> "$GITHUB_ENV"
+        echo "RELEASE_FILE=$(make --silent release_file)" >> "$GITHUB_ENV"
+    - name: "[RELEASE] Check if tag is already released"
+      if: env.WILL_BE_RELEASED == 'true'
+      uses: mukunku/tag-exists-action@v1.2.0
+      id: check_released
+      with:
+        tag: v${{ env.VERSION }}
+    - name: "[RELEASE] Fail if tag is released"
+      if: env.WILL_BE_RELEASED == 'true'
+      run: |
+        [[ "${{ steps.check_released.outputs.exists }}" == "false" ]]
+    - name: "[RELEASE] Create release"
+      uses: marvinpinto/action-automatic-releases@v1.2.1
+      if: env.IS_RELEASE == 'true'
+      with:
+        repo_token: ${{ github.token }}
+        automatic_release_tag: v${{ env.VERSION }}
+        prerelease: false
+        title: Release v${{ env.VERSION }}
+        files: ${{ env.RELEASE_FILE }}
