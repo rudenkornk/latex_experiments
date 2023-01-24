@@ -81,7 +81,7 @@ clean:
 
 
 ###################### container support ######################
-IMAGE_NAMETAG := ghcr.io/rudenkornk/latex_image:2.0.0
+IMAGE_NAMETAG := ghcr.io/rudenkornk/latex_ubuntu:22.0.0
 CONTAINER_NAME := $(PROJECT_NAME)
 
 .PHONY: $(BUILD_DIR)/not_ready
