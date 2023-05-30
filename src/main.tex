@@ -1,5 +1,5 @@
-\input{preamble}
-\input{custom_math}
+\input{src/preamble}
+\input{src/custom_math}
 \usepackage{lipsum}
 
 \global\mdfdefinestyle{example}{%
@@ -569,10 +569,10 @@ Code can be included in several ways:
   \item Outline with loading code from file with \mintinline{tex}{inputminted} command.
 \end{itemize}
 \begin{minted}{tex}
-  \inputminted{c++}{assets/cpp_example.cpp}
+  \inputminted{c++}{src/assets/cpp_example.cpp}
 \end{minted}
 \begin{mdframed}[style=example]
-  \inputminted{c++}{assets/cpp_example.cpp}
+  \inputminted{c++}{src/assets/cpp_example.cpp}
 \end{mdframed}
 
 \section{Citations, quotations and hyperlinks}
