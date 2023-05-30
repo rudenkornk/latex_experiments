@@ -12,7 +12,7 @@ make in_container
 ```
 
 ### Option 2: config your system manually
-Determenistic list of requirements exists, but not specified. You can refer to the [container description](https://github.com/rudenkornk/latex_image) and install similar packages.
+Deterministic list of requirements exists, but not specified. You can refer to the [container description](https://github.com/rudenkornk/latex_image) and install similar packages.
 ```bash
 make
 ```
