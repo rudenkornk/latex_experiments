@@ -4,4 +4,7 @@ logs/
 /.vscode
 vs.code-workspace
 __pycache__
+node_modules
+.mypy_cache
+.makepy/artifacts
 
