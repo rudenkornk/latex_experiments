@@ -11,15 +11,17 @@ A template and an example for LaTeX projects.
 ```bash
 podman run --interactive --tty --detach \
   --env "TERM=xterm-256color" `# colored terminal` \
-  --mount type=bind,source="$(pwd)",target="$(pwd)" `# mount your repo` \
-  --mount type=bind,source="$HOME/.cache",target="$HOME/.cache" `# mount cache` \
-  --name latex \
+  --volume "$(pwd):$(pwd)" `# mount your repo` \
+  --volume "$HOME/.cache:$HOME/.cache" `# mount cache` \
   --userns keep-id `# keeps your non-root username` \
   --workdir "$HOME" `# podman sets homedir to the workdir for some reason` \
+  --name latex \
   ghcr.io/rudenkornk/latex_ubuntu:22.0.7
 podman exec --user root latex bash -c "chown $(id --user):$(id --group) $HOME"
 podman exec --workdir "$(pwd)" --interactive --tty latex bash
 ```
+
+Note: on `SELinux` systems you might need to add `:z` to the volume mounts.
 
 ```bash
 make
